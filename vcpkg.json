@@ -5,13 +5,7 @@
       "name": "catch2"
     },
     {
-      "name": "qt",
-      "default-features": false,
-      "features": [
-        "widgets",
-        "gui",
-        "opengl"
-      ]
+      "name": "qt"
     }
   ]
 }

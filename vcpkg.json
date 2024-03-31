@@ -1,0 +1,17 @@
+{
+  "builtin-baseline": "ce1916404fc6f2b645f419a6d47b7ebafe686582",
+  "dependencies": [
+    {
+      "name": "catch2"
+    },
+    {
+      "name": "qt",
+      "default-features": false,
+      "features": [
+        "widgets",
+        "gui",
+        "opengl"
+      ]
+    }
+  ]
+}

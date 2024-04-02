@@ -1,10 +1,20 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.16)
+
+include(FetchContent)
+FetchContent_Declare(vcpkg
+    GIT_REPOSITORY https://github.com/microsoft/vcpkg/
+)
+FetchContent_MakeAvailable(vcpkg)
+
+# NOTE: This must be defined before the first project call
+set(CMAKE_TOOLCHAIN_FILE "${vcpkg_SOURCE_DIR}/scripts/buildsystems/vcpkg.cmake" CACHE FILEPATH "")
 
 cmake_policy(SET CMP0072 NEW) # new in 3.11. The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
 cmake_policy(SET CMP0068 NEW) # new in 3.9. The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
 
-
 project(QtNodesLibrary CXX)
+
+# include("${PROJECT_SOURCE_DIR}/cmake/vcpkg.cmake")
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -45,7 +55,7 @@ if(BUILD_DEBUG_POSTFIX_D)
   set(CMAKE_MINSIZEREL_POSTFIX "s")
 endif()
 
-add_subdirectory(external)
+# add_subdirectory(external)
 
 if(USE_QT6)
   find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)

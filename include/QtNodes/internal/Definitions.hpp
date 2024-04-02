@@ -12,13 +12,14 @@
  */
 
 namespace QtNodes {
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 NODE_EDITOR_PUBLIC Q_NAMESPACE
 #else
 Q_NAMESPACE_EXPORT(NODE_EDITOR_PUBLIC)
 #endif
 
-    /**
+/**
  * Constants used for fetching QVariant data from GraphModel.
  */
     enum class NodeRole {

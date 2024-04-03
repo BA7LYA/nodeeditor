@@ -14,8 +14,6 @@ cmake_policy(SET CMP0068 NEW) # new in 3.9. The NEW behavior of this policy is t
 
 project(QtNodesLibrary CXX)
 
-# include("${PROJECT_SOURCE_DIR}/cmake/vcpkg.cmake")
-
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)

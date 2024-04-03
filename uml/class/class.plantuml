@@ -1,0 +1,14 @@
+@startuml class
+
+' !pragma layout elk
+skinparam dpi 300
+skinparam defaultFontName Consolas
+set separator ::
+
+namespace qtnodes {
+
+
+
+}
+
+@enduml

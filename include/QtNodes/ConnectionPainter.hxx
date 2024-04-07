@@ -3,7 +3,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPainterPath>
 
-#include "Definitions.hpp"
+#include "QtNodes/Definitions.hxx"
 
 namespace QtNodes {
 
@@ -13,9 +13,9 @@ class ConnectionGraphicsObject;
 class ConnectionPainter
 {
 public:
-    static void paint(QPainter *painter, ConnectionGraphicsObject const &cgo);
+    static void paint(QPainter* painter, const ConnectionGraphicsObject& cgo);
 
-    static QPainterPath getPainterStroke(ConnectionGraphicsObject const &cgo);
+    static QPainterPath getPainterStroke(const ConnectionGraphicsObject& cgo);
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

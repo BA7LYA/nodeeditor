@@ -1,18 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-include(FetchContent)
-FetchContent_Declare(vcpkg
-    GIT_REPOSITORY https://github.com/microsoft/vcpkg/
-)
-FetchContent_MakeAvailable(vcpkg)
-
-# NOTE: This must be defined before the first project call
-set(CMAKE_TOOLCHAIN_FILE "${vcpkg_SOURCE_DIR}/scripts/buildsystems/vcpkg.cmake" CACHE FILEPATH "")
-
 cmake_policy(SET CMP0072 NEW) # new in 3.11. The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
 cmake_policy(SET CMP0068 NEW) # new in 3.9. The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
 
 project(QtNodesLibrary CXX)
+
+include(GNUInstallDirs)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -80,20 +73,12 @@ set(CMAKE_AUTOMOC ON)
 
 # If we want to give the option to build a static library,
 # set BUILD_SHARED_LIBS option to OFF
-add_library(QtNodes
-  ${CPP_SOURCE_FILES}
-  ${HPP_HEADER_FILES}
-  ${RESOURCES}
-)
+add_library(QtNodes ${RESOURCES})
 add_library(QtNodes::QtNodes ALIAS QtNodes)
 
 target_include_directories(QtNodes
   PUBLIC
-    $<INSTALL_INTERFACE:include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  PRIVATE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/QtNodes/internal>
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_sources(QtNodes
@@ -213,35 +198,33 @@ endif()
 # Installation
 ##
 
-include(GNUInstallDirs)
+# set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/QtNodes)
 
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/QtNodes)
+# install(TARGETS QtNodes
+#   EXPORT QtNodesTargets
+#   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+# )
 
-install(TARGETS QtNodes
-  EXPORT QtNodesTargets
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+# install(DIRECTORY include/
+#         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(DIRECTORY include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+# install(EXPORT QtNodesTargets
+#   FILE QtNodesTargets.cmake
+#   NAMESPACE QtNodes::
+#   DESTINATION ${INSTALL_CONFIGDIR}
+# )
 
-install(EXPORT QtNodesTargets
-  FILE QtNodesTargets.cmake
-  NAMESPACE QtNodes::
-  DESTINATION ${INSTALL_CONFIGDIR}
-)
+# include(CMakePackageConfigHelpers)
 
-include(CMakePackageConfigHelpers)
+# configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/QtNodesConfig.cmake.in
+#   ${CMAKE_CURRENT_BINARY_DIR}/QtNodesConfig.cmake
+#   INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
+# )
 
-configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/QtNodesConfig.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/QtNodesConfig.cmake
-  INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
-)
-
-install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/QtNodesConfig.cmake
-  DESTINATION ${INSTALL_CONFIGDIR}
-)
+# install(FILES
+#   ${CMAKE_CURRENT_BINARY_DIR}/QtNodesConfig.cmake
+#   DESTINATION ${INSTALL_CONFIGDIR}
+# )

@@ -9,9 +9,12 @@ class Serializable
 public:
     virtual ~Serializable() = default;
 
-    virtual QJsonObject save() const { return {}; }
+    virtual QJsonObject save() const
+    {
+        return {};
+    }
 
-    virtual void load(QJsonObject const & /*p*/) {}
+    virtual void load(const QJsonObject& /*p*/) {}
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

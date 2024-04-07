@@ -1,23 +1,20 @@
-#include <QtNodes/ConnectionStyle>
-#include <QtNodes/DataFlowGraphModel>
-#include <QtNodes/DataFlowGraphicsScene>
-#include <QtNodes/GraphicsView>
-#include <QtNodes/NodeData>
-#include <QtNodes/NodeDelegateModelRegistry>
-
 #include <QtGui/QScreen>
+#include <QtNodes/ConnectionStyle.hxx>
+#include <QtNodes/DataFlowGraphicsScene.hxx>
+#include <QtNodes/DataFlowGraphModel.hxx>
+#include <QtNodes/GraphicsView.hxx>
+#include <QtNodes/NodeData.hxx>
+#include <QtNodes/NodeDelegateModelRegistry.hxx>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QVBoxLayout>
 
-#include <QtGui/QScreen>
-
-#include "AdditionModel.hpp"
-#include "DivisionModel.hpp"
-#include "MultiplicationModel.hpp"
-#include "NumberDisplayDataModel.hpp"
-#include "NumberSourceDataModel.hpp"
-#include "SubtractionModel.hpp"
+#include "AdditionModel.hxx"
+#include "DivisionModel.hxx"
+#include "MultiplicationModel.hxx"
+#include "NumberDisplayDataModel.hxx"
+#include "NumberSourceDataModel.hxx"
+#include "SubtractionModel.hxx"
 
 using QtNodes::ConnectionStyle;
 using QtNodes::DataFlowGraphicsScene;
@@ -62,10 +59,11 @@ static void setStyle()
       "UseDataDefinedColors": true
     }
   }
-  )");
+  )"
+    );
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
@@ -75,8 +73,8 @@ int main(int argc, char *argv[])
 
     QWidget mainWidget;
 
-    auto menuBar = new QMenuBar();
-    QMenu *menu = menuBar->addMenu("File");
+    auto   menuBar = new QMenuBar();
+    QMenu* menu    = menuBar->addMenu("File");
 
     auto saveAction = menu->addAction("Save Scene");
     saveAction->setShortcut(QKeySequence::Save);
@@ -84,7 +82,7 @@ int main(int argc, char *argv[])
     auto loadAction = menu->addAction("Load Scene");
     loadAction->setShortcut(QKeySequence::Open);
 
-    QVBoxLayout *l = new QVBoxLayout(&mainWidget);
+    QVBoxLayout* l = new QVBoxLayout(&mainWidget);
 
     DataFlowGraphModel dataFlowGraphModel(registry);
 
@@ -96,24 +94,47 @@ int main(int argc, char *argv[])
     l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
 
-    QObject::connect(saveAction, &QAction::triggered, scene, [scene, &mainWidget]() {
-        if (scene->save())
-            mainWidget.setWindowModified(false);
-    });
+    QObject::connect(
+        saveAction,
+        &QAction::triggered,
+        scene,
+        [scene, &mainWidget]()
+        {
+            if (scene->save())
+            {
+                mainWidget.setWindowModified(false);
+            }
+        }
+    );
 
-    QObject::connect(loadAction, &QAction::triggered, scene, &DataFlowGraphicsScene::load);
+    QObject::connect(
+        loadAction,
+        &QAction::triggered,
+        scene,
+        &DataFlowGraphicsScene::load
+    );
 
-    QObject::connect(scene, &DataFlowGraphicsScene::sceneLoaded, view, &GraphicsView::centerScene);
+    QObject::connect(
+        scene,
+        &DataFlowGraphicsScene::sceneLoaded,
+        view,
+        &GraphicsView::centerScene
+    );
 
-    QObject::connect(scene, &DataFlowGraphicsScene::modified, &mainWidget, [&mainWidget]() {
-        mainWidget.setWindowModified(true);
-    });
+    QObject::connect(
+        scene,
+        &DataFlowGraphicsScene::modified,
+        &mainWidget,
+        [&mainWidget]() { mainWidget.setWindowModified(true); }
+    );
 
     mainWidget.setWindowTitle("[*]Data Flow: simplest calculator");
     mainWidget.resize(800, 600);
     // Center window.
-    mainWidget.move(QApplication::primaryScreen()->availableGeometry().center()
-                    - mainWidget.rect().center());
+    mainWidget.move(
+        QApplication::primaryScreen()->availableGeometry().center()
+        - mainWidget.rect().center()
+    );
     mainWidget.showNormal();
 
     return app.exec();

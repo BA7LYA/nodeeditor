@@ -1,10 +1,10 @@
-#include "GraphicsView.hxx"
+#include "QtNodes/GraphicsView.hxx"
 
-#include "BasicGraphicsScene.hxx"
-#include "ConnectionGraphicsObject.hxx"
-#include "NodeGraphicsObject.hxx"
-#include "StyleCollection.hxx"
-#include "UndoCommands.hxx"
+#include "QtNodes/BasicGraphicsScene.hxx"
+#include "QtNodes/ConnectionGraphicsObject.hxx"
+#include "QtNodes/NodeGraphicsObject.hxx"
+#include "QtNodes/StyleCollection.hxx"
+#include "QtNodes/UndoCommands.hxx"
 
 #include <QtWidgets/QGraphicsScene>
 

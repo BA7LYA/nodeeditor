@@ -1,10 +1,10 @@
-#include "UndoCommands.hxx"
+#include "QtNodes/UndoCommands.hxx"
 
-#include "BasicGraphicsScene.hxx"
-#include "ConnectionGraphicsObject.hxx"
-#include "ConnectionIdUtils.hxx"
-#include "Definitions.hxx"
-#include "NodeGraphicsObject.hxx"
+#include "QtNodes/BasicGraphicsScene.hxx"
+#include "QtNodes/ConnectionGraphicsObject.hxx"
+#include "QtNodes/ConnectionIdUtils.hxx"
+#include "QtNodes/Definitions.hxx"
+#include "QtNodes/NodeGraphicsObject.hxx"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>

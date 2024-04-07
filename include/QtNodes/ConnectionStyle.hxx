@@ -2,8 +2,8 @@
 
 #include <QtGui/QColor>
 
-#include "Export.hxx"
-#include "Style.hxx"
+#include "QtNodes/Export.hxx"
+#include "QtNodes/Style.hxx"
 
 namespace QtNodes {
 
@@ -20,7 +20,7 @@ public:
     static void setConnectionStyle(QString jsonText);
 
 public:
-    void loadJson(QJsonObject const &json) override;
+    void loadJson(const QJsonObject& json) override;
 
     QJsonObject toJson() const override;
 
@@ -52,4 +52,4 @@ private:
     bool UseDataDefinedColors;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

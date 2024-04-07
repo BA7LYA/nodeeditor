@@ -2,9 +2,8 @@
 
 #include <QtCore/QUuid>
 
-#include "Export.hpp"
-
-#include "Definitions.hxx"
+#include "QtNodes/Definitions.hxx"
+#include "QtNodes/Export.hxx"
 
 class QPointF;
 
@@ -19,43 +18,48 @@ class NODE_EDITOR_PUBLIC ConnectionState
 public:
     /// Defines whether we construct a new connection
     /// or it is already binding two nodes.
-    enum LooseEnd { Pending = 0, Connected = 1 };
+    enum LooseEnd
+    {
+        Pending   = 0,
+        Connected = 1
+    };
 
 public:
-    ConnectionState(ConnectionGraphicsObject &cgo)
+    ConnectionState(ConnectionGraphicsObject& cgo)
         : _cgo(cgo)
         , _hovered(false)
-    {}
+    {
+    }
 
-    ConnectionState(ConnectionState const &) = delete;
-    ConnectionState(ConnectionState &&) = delete;
+    ConnectionState(const ConnectionState&) = delete;
+    ConnectionState(ConnectionState&&)      = delete;
 
-    ConnectionState &operator=(ConnectionState const &) = delete;
-    ConnectionState &operator=(ConnectionState &&) = delete;
+    ConnectionState& operator=(const ConnectionState&) = delete;
+    ConnectionState& operator=(ConnectionState&&)      = delete;
 
     ~ConnectionState();
 
 public:
     PortType requiredPort() const;
-    bool requiresPort() const;
+    bool     requiresPort() const;
 
     bool hovered() const;
     void setHovered(bool hovered);
 
 public:
     /// Caches NodeId for further interaction.
-    void setLastHoveredNode(NodeId const nodeId);
+    void setLastHoveredNode(const NodeId nodeId);
 
     NodeId lastHoveredNode() const;
 
     void resetLastHoveredNode();
 
 private:
-    ConnectionGraphicsObject &_cgo;
+    ConnectionGraphicsObject& _cgo;
 
     bool _hovered;
 
-    NodeId _lastHoveredNode{InvalidNodeId};
+    NodeId _lastHoveredNode { InvalidNodeId };
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

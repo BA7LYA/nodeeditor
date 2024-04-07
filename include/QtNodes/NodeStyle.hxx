@@ -2,8 +2,8 @@
 
 #include <QtGui/QColor>
 
-#include "Export.hxx"
-#include "Style.hxx"
+#include "QtNodes/Export.hxx"
+#include "QtNodes/Style.hxx"
 
 namespace QtNodes {
 
@@ -14,7 +14,7 @@ public:
 
     NodeStyle(QString jsonText);
 
-    NodeStyle(QJsonObject const &json);
+    NodeStyle(const QJsonObject& json);
 
     virtual ~NodeStyle() = default;
 
@@ -22,7 +22,7 @@ public:
     static void setNodeStyle(QString jsonText);
 
 public:
-    void loadJson(QJsonObject const &json) override;
+    void loadJson(const QJsonObject& json) override;
 
     QJsonObject toJson() const override;
 
@@ -51,4 +51,4 @@ public:
     float Opacity;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

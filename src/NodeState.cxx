@@ -1,15 +1,15 @@
-#include "NodeState.hxx"
+#include "QtNodes/NodeState.hxx"
 
-#include "ConnectionGraphicsObject.hxx"
-#include "NodeGraphicsObject.hxx"
+#include "QtNodes/ConnectionGraphicsObject.hxx"
+#include "QtNodes/NodeGraphicsObject.hxx"
 
 namespace QtNodes {
 
-NodeState::NodeState(NodeGraphicsObject &ngo)
+NodeState::NodeState(NodeGraphicsObject& ngo)
     : _ngo(ngo)
     , _hovered(false)
     , _resizing(false)
-    , _connectionForReaction{nullptr}
+    , _connectionForReaction { nullptr }
 {
     Q_UNUSED(_ngo);
 }
@@ -24,12 +24,12 @@ bool NodeState::resizing() const
     return _resizing;
 }
 
-ConnectionGraphicsObject const *NodeState::connectionForReaction() const
+const ConnectionGraphicsObject* NodeState::connectionForReaction() const
 {
     return _connectionForReaction.data();
 }
 
-void NodeState::storeConnectionForReaction(ConnectionGraphicsObject const *cgo)
+void NodeState::storeConnectionForReaction(const ConnectionGraphicsObject* cgo)
 {
     _connectionForReaction = cgo;
 }
@@ -39,4 +39,4 @@ void NodeState::resetConnectionForReaction()
     _connectionForReaction.clear();
 }
 
-} // namespace QtNodes
+}  // namespace QtNodes

@@ -1,4 +1,4 @@
-#include "AbstractGraphModel.hxx"
+#include "QtNodes/AbstractGraphModel.hxx"
 
 #include <QtNodes/ConnectionIdUtils.hxx>
 

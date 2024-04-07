@@ -1,19 +1,18 @@
 #pragma once
 
-#include "Export.hxx"
-#include "NodeData.hxx"
-#include "NodeDelegateModel.hxx"
-#include "QStringStdHash.hxx"
-
-#include <QtCore/QString>
-
 #include <functional>
 #include <memory>
+#include <QtCore/QString>
 #include <set>
 #include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
+
+#include "QtNodes/Export.hxx"
+#include "QtNodes/NodeData.hxx"
+#include "QtNodes/NodeDelegateModel.hxx"
+#include "QtNodes/QStringStdHash.hxx"
 
 namespace QtNodes {
 
@@ -21,34 +20,40 @@ namespace QtNodes {
 class NODE_EDITOR_PUBLIC NodeDelegateModelRegistry
 {
 public:
-    using RegistryItemPtr = std::unique_ptr<NodeDelegateModel>;
+    using RegistryItemPtr     = std::unique_ptr<NodeDelegateModel>;
     using RegistryItemCreator = std::function<RegistryItemPtr()>;
     using RegisteredModelCreatorsMap
         = std::unordered_map<QString, RegistryItemCreator>;
     using RegisteredModelsCategoryMap = std::unordered_map<QString, QString>;
-    using CategoriesSet = std::set<QString>;
+    using CategoriesSet               = std::set<QString>;
 
-    //using RegisteredTypeConvertersMap = std::map<TypeConverterId, TypeConverter>;
+    // using RegisteredTypeConvertersMap = std::map<TypeConverterId,
+    // TypeConverter>;
 
-    NodeDelegateModelRegistry() = default;
+    NodeDelegateModelRegistry()  = default;
     ~NodeDelegateModelRegistry() = default;
 
-    NodeDelegateModelRegistry(NodeDelegateModelRegistry const &) = delete;
-    NodeDelegateModelRegistry(NodeDelegateModelRegistry &&) = default;
+    NodeDelegateModelRegistry(const NodeDelegateModelRegistry&) = delete;
+    NodeDelegateModelRegistry(NodeDelegateModelRegistry&&)      = default;
 
-    NodeDelegateModelRegistry &operator=(NodeDelegateModelRegistry const &)
+    NodeDelegateModelRegistry& operator=(const NodeDelegateModelRegistry&)
         = delete;
 
-    NodeDelegateModelRegistry &operator=(NodeDelegateModelRegistry &&) = default;
+    NodeDelegateModelRegistry& operator=(NodeDelegateModelRegistry&&) = default;
 
 public:
     template<typename ModelType>
     void registerModel(
-        RegistryItemCreator creator, QString const &category = "Nodes")
+        RegistryItemCreator creator,
+        const QString&      category = "Nodes"
+    )
     {
-        QString const name
-            = computeName<ModelType>(HasStaticMethodName<ModelType>{}, creator);
-        if (!_registeredItemCreators.count(name)) {
+        const QString name = computeName<ModelType>(
+            HasStaticMethodName<ModelType> {},
+            creator
+        );
+        if (!_registeredItemCreators.count(name))
+        {
             _registeredItemCreators[name] = std::move(creator);
             _categories.insert(category);
             _registeredModelsCategory[name] = category;
@@ -56,11 +61,10 @@ public:
     }
 
     template<typename ModelType>
-    void registerModel(QString const &category = "Nodes")
+    void registerModel(const QString& category = "Nodes")
     {
-        RegistryItemCreator creator = []() {
-            return std::make_unique<ModelType>();
-        };
+        RegistryItemCreator creator
+            = []() { return std::make_unique<ModelType>(); };
         registerModel<ModelType>(std::move(creator), category);
     }
 
@@ -100,14 +104,14 @@ public:
 
 #endif
 
-    std::unique_ptr<NodeDelegateModel> create(QString const &modelName);
+    std::unique_ptr<NodeDelegateModel> create(const QString& modelName);
 
-    RegisteredModelCreatorsMap const &registeredModelCreators() const;
+    const RegisteredModelCreatorsMap& registeredModelCreators() const;
 
-    RegisteredModelsCategoryMap const &registeredModelsCategoryAssociation()
-        const;
+    const RegisteredModelsCategoryMap& registeredModelsCategoryAssociation(
+    ) const;
 
-    CategoriesSet const &categories() const;
+    const CategoriesSet& categories() const;
 
 #if 0
   TypeConverter
@@ -132,7 +136,8 @@ private:
     // method: `virtual QString name() const;`
     template<typename T, typename = void>
     struct HasStaticMethodName : std::false_type
-    {};
+    {
+    };
 
     template<typename T>
     struct HasStaticMethodName<
@@ -140,17 +145,20 @@ private:
         typename std::enable_if<
             std::is_same<decltype(T::Name()), QString>::value>::type>
         : std::true_type
-    {};
+    {
+    };
 
     template<typename ModelType>
-    static QString computeName(std::true_type, RegistryItemCreator const &)
+    static QString computeName(std::true_type, const RegistryItemCreator&)
     {
         return ModelType::Name();
     }
 
     template<typename ModelType>
     static QString computeName(
-        std::false_type, RegistryItemCreator const &creator)
+        std::false_type,
+        const RegistryItemCreator& creator
+    )
     {
         return creator()->name();
     }
@@ -162,7 +170,8 @@ private:
         static_assert(
             !std::is_same<T, T>::value,
             "The ModelCreator must return a std::unique_ptr<T>, where T "
-            "inherits from NodeDelegateModel");
+            "inherits from NodeDelegateModel"
+        );
     };
 
     template<typename T>
@@ -171,7 +180,8 @@ private:
         static_assert(
             std::is_base_of<NodeDelegateModel, T>::value,
             "The ModelCreator must return a std::unique_ptr<T>, where T "
-            "inherits from NodeDelegateModel");
+            "inherits from NodeDelegateModel"
+        );
         using type = T;
     };
 
@@ -179,4 +189,4 @@ private:
     using compute_model_type_t = typename UnwrapUniquePtr<CreatorResult>::type;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

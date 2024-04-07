@@ -9,20 +9,20 @@
 
 namespace QtNodes {
 
-class Style // : public QObject
+class Style  // : public QObject
 {
-    //Q_OBJECT
+    // Q_OBJECT
 
 public:
     virtual ~Style() = default;
 
 public:
-    virtual void loadJson(QJsonObject const &json) = 0;
+    virtual void loadJson(const QJsonObject& json) = 0;
 
     virtual QJsonObject toJson() const = 0;
 
     /// Loads from utf-8 byte array.
-    virtual void loadJsonFromByteArray(QByteArray const &byteArray)
+    virtual void loadJsonFromByteArray(const QByteArray& byteArray)
     {
         auto json = QJsonDocument::fromJson(byteArray).object();
 
@@ -38,7 +38,8 @@ public:
     {
         QFile file(fileName);
 
-        if (!file.open(QIODevice::ReadOnly)) {
+        if (!file.open(QIODevice::ReadOnly))
+        {
             qWarning() << "Couldn't open file " << fileName;
 
             return;
@@ -48,4 +49,4 @@ public:
     }
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

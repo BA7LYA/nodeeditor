@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Compiler.hxx"
-#include "OperatingSystem.hxx"
+#include "QtNodes/Compiler.hxx"
+#include "QtNodes/OperatingSystem.hxx"
 
 #ifdef NODE_EDITOR_PLATFORM_WINDOWS
 #define NODE_EDITOR_EXPORT __declspec(dllexport)
@@ -11,7 +11,7 @@
     || defined(NODE_EDITOR_COMPILER_CLANG)
 #define NODE_EDITOR_EXPORT __attribute__((visibility("default")))
 #define NODE_EDITOR_IMPORT __attribute__((visibility("default")))
-#define NODE_EDITOR_LOCAL __attribute__((visibility("hidden")))
+#define NODE_EDITOR_LOCAL  __attribute__((visibility("hidden")))
 #else
 #define NODE_EDITOR_EXPORT
 #define NODE_EDITOR_IMPORT

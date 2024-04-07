@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "Export.hxx"
+#include "QtNodes/Export.hxx"
 
 class QPainter;
 

@@ -1,21 +1,21 @@
-#include "StyleCollection.hpp"
+#include "QtNodes/StyleCollection.hxx"
 
 using QtNodes::ConnectionStyle;
 using QtNodes::GraphicsViewStyle;
 using QtNodes::NodeStyle;
 using QtNodes::StyleCollection;
 
-NodeStyle const &StyleCollection::nodeStyle()
+const NodeStyle& StyleCollection::nodeStyle()
 {
     return instance()._nodeStyle;
 }
 
-ConnectionStyle const &StyleCollection::connectionStyle()
+const ConnectionStyle& StyleCollection::connectionStyle()
 {
     return instance()._connectionStyle;
 }
 
-GraphicsViewStyle const &StyleCollection::flowViewStyle()
+const GraphicsViewStyle& StyleCollection::flowViewStyle()
 {
     return instance()._flowViewStyle;
 }
@@ -35,7 +35,7 @@ void StyleCollection::setGraphicsViewStyle(GraphicsViewStyle flowViewStyle)
     instance()._flowViewStyle = flowViewStyle;
 }
 
-StyleCollection &StyleCollection::instance()
+StyleCollection& StyleCollection::instance()
 {
     static StyleCollection collection;
 

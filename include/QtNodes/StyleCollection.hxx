@@ -1,21 +1,20 @@
 #pragma once
 
-#include "Export.hxx"
-
-#include "ConnectionStyle.hxx"
-#include "GraphicsViewStyle.hxx"
-#include "NodeStyle.hxx"
+#include "QtNodes/ConnectionStyle.hxx"
+#include "QtNodes/Export.hxx"
+#include "QtNodes/GraphicsViewStyle.hxx"
+#include "QtNodes/NodeStyle.hxx"
 
 namespace QtNodes {
 
 class NODE_EDITOR_PUBLIC StyleCollection
 {
 public:
-    static NodeStyle const &nodeStyle();
+    static const NodeStyle& nodeStyle();
 
-    static ConnectionStyle const &connectionStyle();
+    static const ConnectionStyle& connectionStyle();
 
-    static GraphicsViewStyle const &flowViewStyle();
+    static const GraphicsViewStyle& flowViewStyle();
 
 public:
     static void setNodeStyle(NodeStyle);
@@ -27,11 +26,11 @@ public:
 private:
     StyleCollection() = default;
 
-    StyleCollection(StyleCollection const &) = delete;
+    StyleCollection(const StyleCollection&) = delete;
 
-    StyleCollection &operator=(StyleCollection const &) = delete;
+    StyleCollection& operator=(const StyleCollection&) = delete;
 
-    static StyleCollection &instance();
+    static StyleCollection& instance();
 
 private:
     NodeStyle _nodeStyle;
@@ -41,4 +40,4 @@ private:
     GraphicsViewStyle _flowViewStyle;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

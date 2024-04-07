@@ -1,16 +1,14 @@
 #pragma once
 
-#include "Export.hxx"
-
-#include <unordered_map>
-#include <unordered_set>
-
 #include <QtCore/QJsonObject>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
+#include <unordered_map>
+#include <unordered_set>
 
-#include "ConnectionIdHash.hxx"
-#include "Definitions.hxx"
+#include "QtNodes/ConnectionIdHash.hxx"
+#include "QtNodes/Definitions.hxx"
+#include "QtNodes/Export.hxx"
 
 namespace QtNodes {
 
@@ -27,6 +25,7 @@ namespace QtNodes {
 class NODE_EDITOR_PUBLIC AbstractGraphModel : public QObject
 {
     Q_OBJECT
+
 public:
     /// Generates a new unique NodeId.
     virtual NodeId newNodeId() = 0;
@@ -44,7 +43,8 @@ public:
      * A collection of all input and output connections for the given `nodeId`.
      */
     virtual std::unordered_set<ConnectionId> allConnectionIds(
-        NodeId const nodeId) const
+        const NodeId nodeId
+    ) const
         = 0;
 
     /// @brief Returns all connected Node Ids for given port.
@@ -53,11 +53,14 @@ public:
      * opposite to the given `portType`.
      */
     virtual std::unordered_set<ConnectionId> connections(
-        NodeId nodeId, PortType portType, PortIndex index) const
+        NodeId    nodeId,
+        PortType  portType,
+        PortIndex index
+    ) const
         = 0;
 
     /// Checks if two nodes with the given `connectionId` are connected.
-    virtual bool connectionExists(ConnectionId const connectionId) const = 0;
+    virtual bool connectionExists(const ConnectionId connectionId) const = 0;
 
     /// Creates a new node instance in the derived class.
     /**
@@ -66,7 +69,7 @@ public:
      * model on its own, it helps to distinguish between possible node
      * types and create a correct instance inside.
      */
-    virtual NodeId addNode(QString const nodeType = QString()) = 0;
+    virtual NodeId addNode(const QString nodeType = QString()) = 0;
 
     /// Model decides if a conection with a given connection Id possible.
     /**
@@ -75,10 +78,13 @@ public:
      * It is possible to override the function and connect non-equal
      * data types.
      */
-    virtual bool connectionPossible(ConnectionId const connectionId) const = 0;
+    virtual bool connectionPossible(const ConnectionId connectionId) const = 0;
 
     /// Defines if detaching the connection is possible.
-    virtual bool detachPossible(ConnectionId const) const { return true; }
+    virtual bool detachPossible(const ConnectionId) const
+    {
+        return true;
+    }
 
     /// Creates a new connection between two nodes.
     /**
@@ -88,13 +94,13 @@ public:
      * In the derived classes user must emite the signal to notify the
      * scene about the changes.
      */
-    virtual void addConnection(ConnectionId const connectionId) = 0;
+    virtual void addConnection(const ConnectionId connectionId) = 0;
 
     /**
      * @returns `true` if there is data in the model associated with the
      * given `nodeId`.
      */
-    virtual bool nodeExists(NodeId const nodeId) const = 0;
+    virtual bool nodeExists(const NodeId nodeId) const = 0;
 
     /// @brief Returns node-related data for requested NodeRole.
     /**
@@ -104,7 +110,8 @@ public:
 
     /**
      * A utility function that unwraps the `QVariant` value returned from the
-     * standard `QVariant AbstractGraphModel::nodeData(NodeId, NodeRole)` function.
+     * standard `QVariant AbstractGraphModel::nodeData(NodeId, NodeRole)`
+     * function.
      */
     template<typename T>
     T nodeData(NodeId nodeId, NodeRole role) const
@@ -132,7 +139,11 @@ public:
      * Caption.
      */
     virtual QVariant portData(
-        NodeId nodeId, PortType portType, PortIndex index, PortRole role) const
+        NodeId    nodeId,
+        PortType  portType,
+        PortIndex index,
+        PortRole  role
+    ) const
         = 0;
 
     /**
@@ -140,29 +151,32 @@ public:
      * standard `QVariant AbstractGraphModel::portData(...)` function.
      */
     template<typename T>
-    T portData(
-        NodeId nodeId, PortType portType, PortIndex index, PortRole role) const
+    T portData(NodeId nodeId, PortType portType, PortIndex index, PortRole role)
+        const
     {
         return portData(nodeId, portType, index, role).value<T>();
     }
 
     virtual bool setPortData(
-        NodeId nodeId,
-        PortType portType,
-        PortIndex index,
-        QVariant const &value,
-        PortRole role = PortRole::Data)
-        = 0;
+        NodeId          nodeId,
+        PortType        portType,
+        PortIndex       index,
+        const QVariant& value,
+        PortRole        role = PortRole::Data
+    ) = 0;
 
-    virtual bool deleteConnection(ConnectionId const connectionId) = 0;
+    virtual bool deleteConnection(const ConnectionId connectionId) = 0;
 
-    virtual bool deleteNode(NodeId const nodeId) = 0;
+    virtual bool deleteNode(const NodeId nodeId) = 0;
 
     /**
      * Reimplement the function if you want to store/restore the node's
      * inner state during undo/redo node deletion operations.
      */
-    virtual QJsonObject saveNode(NodeId const) const { return {}; }
+    virtual QJsonObject saveNode(const NodeId) const
+    {
+        return {};
+    }
 
     /**
      * Reimplement the function if you want to support:
@@ -183,15 +197,17 @@ public:
      * }
      * ```
      *
-     * The function must do almost exacly the same thing as the normal addNode().
-     * The main difference is in a model-specific `inner-data` processing.
+     * The function must do almost exacly the same thing as the normal
+     * addNode(). The main difference is in a model-specific `inner-data`
+     * processing.
      */
-    virtual void loadNode(QJsonObject const &) {}
+    virtual void loadNode(const QJsonObject&) {}
 
 public:
     /**
-     * Function clears connections attached to the ports that are scheduled to be
-     * deleted. It must be called right before the model removes its old port data.
+     * Function clears connections attached to the ports that are scheduled to
+     * be deleted. It must be called right before the model removes its old port
+     * data.
      *
      * @param nodeId Defines the node to be modified
      * @param portType Is either PortType::In or PortType::Out
@@ -199,10 +215,11 @@ public:
      * @param last Index of the last port to be removed
      */
     void portsAboutToBeDeleted(
-        NodeId const nodeId,
-        PortType const portType,
-        PortIndex const first,
-        PortIndex const last);
+        const NodeId    nodeId,
+        const PortType  portType,
+        const PortIndex first,
+        const PortIndex last
+    );
 
     /**
      * Signal emitted when model no longer has the old data associated with the
@@ -215,15 +232,17 @@ public:
      * @param first Is the first index of the new port after insertion.
      * @param last Is the last index of the new port after insertion.
      *
-     * Function caches existing connections that are located after the `last` port
-     * index. For such connections the new "post-insertion" addresses are computed
-     * and stored until the function AbstractGraphModel::portsInserted is called.
+     * Function caches existing connections that are located after the `last`
+     * port index. For such connections the new "post-insertion" addresses are
+     * computed and stored until the function AbstractGraphModel::portsInserted
+     * is called.
      */
     void portsAboutToBeInserted(
-        NodeId const nodeId,
-        PortType const portType,
-        PortIndex const first,
-        PortIndex const last);
+        const NodeId    nodeId,
+        const PortType  portType,
+        const PortIndex first,
+        const PortIndex last
+    );
 
     /**
      * Function re-creates the connections that were shifted during the port
@@ -232,19 +251,19 @@ public:
     void portsInserted();
 
 Q_SIGNALS:
-    void connectionCreated(ConnectionId const connectionId);
+    void connectionCreated(const ConnectionId connectionId);
 
-    void connectionDeleted(ConnectionId const connectionId);
+    void connectionDeleted(const ConnectionId connectionId);
 
-    void nodeCreated(NodeId const nodeId);
+    void nodeCreated(const NodeId nodeId);
 
-    void nodeDeleted(NodeId const nodeId);
+    void nodeDeleted(const NodeId nodeId);
 
-    void nodeUpdated(NodeId const nodeId);
+    void nodeUpdated(const NodeId nodeId);
 
-    void nodeFlagsUpdated(NodeId const nodeId);
+    void nodeFlagsUpdated(const NodeId nodeId);
 
-    void nodePositionUpdated(NodeId const nodeId);
+    void nodePositionUpdated(const NodeId nodeId);
 
     void modelReset();
 
@@ -252,4 +271,4 @@ private:
     std::vector<ConnectionId> _shiftedByDynamicPortsConnections;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

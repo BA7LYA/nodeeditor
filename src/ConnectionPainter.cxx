@@ -1,13 +1,13 @@
-#include "ConnectionPainter.hxx"
+#include "QtNodes/ConnectionPainter.hxx"
 
 #include <QtGui/QIcon>
 
-#include "AbstractGraphModel.hxx"
-#include "ConnectionGraphicsObject.hxx"
-#include "ConnectionState.hxx"
-#include "Definitions.hxx"
-#include "NodeData.hxx"
-#include "StyleCollection.hxx"
+#include "QtNodes/AbstractGraphModel.hxx"
+#include "QtNodes/ConnectionGraphicsObject.hxx"
+#include "QtNodes/ConnectionState.hxx"
+#include "QtNodes/Definitions.hxx"
+#include "QtNodes/NodeData.hxx"
+#include "QtNodes/StyleCollection.hxx"
 
 namespace QtNodes {
 

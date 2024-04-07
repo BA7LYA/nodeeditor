@@ -1,27 +1,26 @@
-#include "AbstractNodeGeometry.hxx"
-
-#include "AbstractGraphModel.hxx"
-#include "StyleCollection.hxx"
-
-#include <QMargins>
+#include "QtNodes/AbstractNodeGeometry.hxx"
 
 #include <cmath>
+#include <QMargins>
+
+#include "QtNodes/AbstractGraphModel.hxx"
+#include "QtNodes/StyleCollection.hxx"
 
 namespace QtNodes {
 
-AbstractNodeGeometry::AbstractNodeGeometry(AbstractGraphModel &graphModel)
+AbstractNodeGeometry::AbstractNodeGeometry(AbstractGraphModel& graphModel)
     : _graphModel(graphModel)
 {
     //
 }
 
-QRectF AbstractNodeGeometry::boundingRect(NodeId const nodeId) const
+QRectF AbstractNodeGeometry::boundingRect(const NodeId nodeId) const
 {
     QSize s = size(nodeId);
 
     double ratio = 0.20;
 
-    int widthMargin = s.width() * ratio;
+    int widthMargin  = s.width() * ratio;
     int heightMargin = s.height() * ratio;
 
     QMargins margins(widthMargin, heightMargin, widthMargin, heightMargin);
@@ -32,10 +31,11 @@ QRectF AbstractNodeGeometry::boundingRect(NodeId const nodeId) const
 }
 
 QPointF AbstractNodeGeometry::portScenePosition(
-    NodeId const nodeId,
-    PortType const portType,
-    PortIndex const index,
-    QTransform const &t) const
+    const NodeId      nodeId,
+    const PortType    portType,
+    const PortIndex   index,
+    const QTransform& t
+) const
 {
     QPointF result = portPosition(nodeId, portType, index);
 
@@ -43,29 +43,37 @@ QPointF AbstractNodeGeometry::portScenePosition(
 }
 
 PortIndex AbstractNodeGeometry::checkPortHit(
-    NodeId const nodeId, PortType const portType, QPointF const nodePoint) const
+    const NodeId   nodeId,
+    const PortType portType,
+    const QPointF  nodePoint
+) const
 {
-    auto const &nodeStyle = StyleCollection::nodeStyle();
+    const auto& nodeStyle = StyleCollection::nodeStyle();
 
     PortIndex result = InvalidPortIndex;
 
     if (portType == PortType::None)
+    {
         return result;
+    }
 
-    double const tolerance = 2.0 * nodeStyle.ConnectionPointDiameter;
+    const double tolerance = 2.0 * nodeStyle.ConnectionPointDiameter;
 
-    size_t const n = _graphModel.nodeData<unsigned int>(
+    const size_t n = _graphModel.nodeData<unsigned int>(
         nodeId,
         (portType == PortType::Out) ? NodeRole::OutPortCount
-                                    : NodeRole::InPortCount);
+                                    : NodeRole::InPortCount
+    );
 
-    for (unsigned int portIndex = 0; portIndex < n; ++portIndex) {
+    for (unsigned int portIndex = 0; portIndex < n; ++portIndex)
+    {
         auto pp = portPosition(nodeId, portType, portIndex);
 
-        QPointF p = pp - nodePoint;
-        auto distance = std::sqrt(QPointF::dotProduct(p, p));
+        QPointF p        = pp - nodePoint;
+        auto    distance = std::sqrt(QPointF::dotProduct(p, p));
 
-        if (distance < tolerance) {
+        if (distance < tolerance)
+        {
             result = portIndex;
             break;
         }
@@ -74,4 +82,4 @@ PortIndex AbstractNodeGeometry::checkPortHit(
     return result;
 }
 
-} // namespace QtNodes
+}  // namespace QtNodes

@@ -1,14 +1,12 @@
-#include "ConnectionStyle.hxx"
+#include "QtNodes/ConnectionStyle.hxx"
 
-#include "StyleCollection.hxx"
-
+#include <QDebug>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonValueRef>
-
-#include <QDebug>
-
 #include <random>
+
+#include "QtNodes/StyleCollection.hxx"
 
 using QtNodes::ConnectionStyle;
 
@@ -23,7 +21,8 @@ ConnectionStyle::ConnectionStyle()
     // order fiasco: https://isocpp.org/wiki/faq/ctors#static-init-order
     initResources();
 
-    // This configuration is stored inside the compiled unit and is loaded statically
+    // This configuration is stored inside the compiled unit and is loaded
+    // statically
     loadJsonFile(":DefaultStyle.json");
 }
 
@@ -41,10 +40,10 @@ void ConnectionStyle::setConnectionStyle(QString jsonText)
 }
 
 #ifdef STYLE_DEBUG
-#define CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(v, variable) \
-    { \
+#define CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(v, variable)                    \
+    {                                                                          \
         if (v.type() == QJsonValue::Undefined || v.type() == QJsonValue::Null) \
-            qWarning() << "Undefined value for parameter:" << #variable; \
+            qWarning() << "Undefined value for parameter:" << #variable;       \
     }
 #else
 #define CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(v, variable)
@@ -53,58 +52,63 @@ void ConnectionStyle::setConnectionStyle(QString jsonText)
 #define CONNECTION_VALUE_EXISTS(v) \
     (v.type() != QJsonValue::Undefined && v.type() != QJsonValue::Null)
 
-#define CONNECTION_STYLE_READ_COLOR(values, variable) \
-    { \
-        auto valueRef = values[#variable]; \
-        CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(valueRef, variable) \
-        if (CONNECTION_VALUE_EXISTS(valueRef)) { \
-            if (valueRef.isArray()) { \
-                auto colorArray = valueRef.toArray(); \
-                std::vector<int> rgb; \
-                rgb.reserve(3); \
+#define CONNECTION_STYLE_READ_COLOR(values, variable)                      \
+    {                                                                      \
+        auto valueRef = values[#variable];                                 \
+        CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(valueRef, variable)         \
+        if (CONNECTION_VALUE_EXISTS(valueRef))                             \
+        {                                                                  \
+            if (valueRef.isArray())                                        \
+            {                                                              \
+                auto             colorArray = valueRef.toArray();          \
+                std::vector<int> rgb;                                      \
+                rgb.reserve(3);                                            \
                 for (auto it = colorArray.begin(); it != colorArray.end(); \
-                     ++it) { \
-                    rgb.push_back((*it).toInt()); \
-                } \
-                variable = QColor(rgb[0], rgb[1], rgb[2]); \
-            } else { \
-                variable = QColor(valueRef.toString()); \
-            } \
-        } \
+                     ++it)                                                 \
+                {                                                          \
+                    rgb.push_back((*it).toInt());                          \
+                }                                                          \
+                variable = QColor(rgb[0], rgb[1], rgb[2]);                 \
+            }                                                              \
+            else                                                           \
+            {                                                              \
+                variable = QColor(valueRef.toString());                    \
+            }                                                              \
+        }                                                                  \
     }
 
 #define CONNECTION_STYLE_WRITE_COLOR(values, variable) \
-    { \
-        values[#variable] = variable.name(); \
+    {                                                  \
+        values[#variable] = variable.name();           \
     }
 
-#define CONNECTION_STYLE_READ_FLOAT(values, variable) \
-    { \
-        auto valueRef = values[#variable]; \
+#define CONNECTION_STYLE_READ_FLOAT(values, variable)              \
+    {                                                              \
+        auto valueRef = values[#variable];                         \
         CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(valueRef, variable) \
-        if (CONNECTION_VALUE_EXISTS(valueRef)) \
-            variable = valueRef.toDouble(); \
+        if (CONNECTION_VALUE_EXISTS(valueRef))                     \
+            variable = valueRef.toDouble();                        \
     }
 
 #define CONNECTION_STYLE_WRITE_FLOAT(values, variable) \
-    { \
-        values[#variable] = variable; \
+    {                                                  \
+        values[#variable] = variable;                  \
     }
 
-#define CONNECTION_STYLE_READ_BOOL(values, variable) \
-    { \
-        auto valueRef = values[#variable]; \
+#define CONNECTION_STYLE_READ_BOOL(values, variable)               \
+    {                                                              \
+        auto valueRef = values[#variable];                         \
         CONNECTION_STYLE_CHECK_UNDEFINED_VALUE(valueRef, variable) \
-        if (CONNECTION_VALUE_EXISTS(valueRef)) \
-            variable = valueRef.toBool(); \
+        if (CONNECTION_VALUE_EXISTS(valueRef))                     \
+            variable = valueRef.toBool();                          \
     }
 
 #define CONNECTION_STYLE_WRITE_BOOL(values, variable) \
-    { \
-        values[#variable] = variable; \
+    {                                                 \
+        values[#variable] = variable;                 \
     }
 
-void ConnectionStyle::loadJson(QJsonObject const &json)
+void ConnectionStyle::loadJson(const QJsonObject& json)
 {
     QJsonValue nodeStyleValues = json["ConnectionStyle"];
 
@@ -159,9 +163,9 @@ QColor ConnectionStyle::normalColor(QString typeId) const
 {
     std::size_t hash = qHash(typeId);
 
-    std::size_t const hue_range = 0xFF;
+    const std::size_t hue_range = 0xFF;
 
-    std::mt19937 gen(static_cast<unsigned int>(hash));
+    std::mt19937                       gen(static_cast<unsigned int>(hash));
     std::uniform_int_distribution<int> distrib(0, hue_range);
 
     int hue = distrib(gen);

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "BasicGraphicsScene.hxx"
-#include "DataFlowGraphModel.hxx"
-#include "Export.hxx"
+#include "QtNodes/BasicGraphicsScene.hxx"
+#include "QtNodes/DataFlowGraphModel.hxx"
+#include "QtNodes/Export.hxx"
 
 namespace QtNodes {
 
@@ -14,9 +14,12 @@ namespace QtNodes {
 class NODE_EDITOR_PUBLIC DataFlowGraphicsScene : public BasicGraphicsScene
 {
     Q_OBJECT
+
 public:
     DataFlowGraphicsScene(
-        DataFlowGraphModel &graphModel, QObject *parent = nullptr);
+        DataFlowGraphModel& graphModel,
+        QObject*            parent = nullptr
+    );
 
     ~DataFlowGraphicsScene() = default;
 
@@ -24,7 +27,7 @@ public:
     std::vector<NodeId> selectedNodes() const;
 
 public:
-    QMenu *createSceneMenu(QPointF const scenePos) override;
+    QMenu* createSceneMenu(const QPointF scenePos) override;
 
 public Q_SLOTS:
     bool save() const;
@@ -35,7 +38,7 @@ Q_SIGNALS:
     void sceneLoaded();
 
 private:
-    DataFlowGraphModel &_graphModel;
+    DataFlowGraphModel& _graphModel;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

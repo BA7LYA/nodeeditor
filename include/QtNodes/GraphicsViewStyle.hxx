@@ -2,8 +2,8 @@
 
 #include <QtGui/QColor>
 
-#include "Export.hxx"
-#include "Style.hxx"
+#include "QtNodes/Export.hxx"
+#include "QtNodes/Style.hxx"
 
 namespace QtNodes {
 
@@ -20,7 +20,7 @@ public:
     static void setStyle(QString jsonText);
 
 private:
-    void loadJson(QJsonObject const &json) override;
+    void loadJson(const QJsonObject& json) override;
 
     QJsonObject toJson() const override;
 
@@ -30,4 +30,4 @@ public:
     QColor CoarseGridColor;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

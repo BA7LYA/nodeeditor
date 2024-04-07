@@ -1,26 +1,29 @@
-#include "ConnectionState.hpp"
+#include "QtNodes/ConnectionState.hxx"
 
 #include <QtCore/QDebug>
 #include <QtCore/QPointF>
 
-#include "BasicGraphicsScene.hxx"
-#include "ConnectionGraphicsObject.hxx"
-#include "NodeGraphicsObject.hxx"
+#include "QtNodes/BasicGraphicsScene.hxx"
+#include "QtNodes/ConnectionGraphicsObject.hxx"
+#include "QtNodes/NodeGraphicsObject.hxx"
 
 namespace QtNodes {
 
 ConnectionState::~ConnectionState()
 {
-    //resetLastHoveredNode();
+    // resetLastHoveredNode();
 }
 
 PortType ConnectionState::requiredPort() const
 {
     PortType t = PortType::None;
 
-    if (_cgo.connectionId().outNodeId == InvalidNodeId) {
+    if (_cgo.connectionId().outNodeId == InvalidNodeId)
+    {
         t = PortType::Out;
-    } else if (_cgo.connectionId().inNodeId == InvalidNodeId) {
+    }
+    else if (_cgo.connectionId().inNodeId == InvalidNodeId)
+    {
         t = PortType::In;
     }
 
@@ -29,7 +32,7 @@ PortType ConnectionState::requiredPort() const
 
 bool ConnectionState::requiresPort() const
 {
-    const ConnectionId &id = _cgo.connectionId();
+    const ConnectionId& id = _cgo.connectionId();
     return id.outNodeId == InvalidNodeId || id.inNodeId == InvalidNodeId;
 }
 
@@ -43,7 +46,7 @@ void ConnectionState::setHovered(bool hovered)
     _hovered = hovered;
 }
 
-void ConnectionState::setLastHoveredNode(NodeId const nodeId)
+void ConnectionState::setLastHoveredNode(const NodeId nodeId)
 {
     _lastHoveredNode = nodeId;
 }
@@ -55,7 +58,8 @@ NodeId ConnectionState::lastHoveredNode() const
 
 void ConnectionState::resetLastHoveredNode()
 {
-    if (_lastHoveredNode != InvalidNodeId) {
+    if (_lastHoveredNode != InvalidNodeId)
+    {
         auto ngo = _cgo.nodeScene()->nodeGraphicsObject(_lastHoveredNode);
         ngo->update();
     }
@@ -63,4 +67,4 @@ void ConnectionState::resetLastHoveredNode()
     _lastHoveredNode = InvalidNodeId;
 }
 
-} // namespace QtNodes
+}  // namespace QtNodes

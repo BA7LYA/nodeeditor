@@ -1,16 +1,14 @@
 #pragma once
 
+#include <QtCore/QPointer>
+#include <QtCore/QPointF>
+#include <QtCore/QUuid>
 #include <unordered_map>
 #include <vector>
 
-#include <QtCore/QPointF>
-#include <QtCore/QPointer>
-#include <QtCore/QUuid>
-
-#include "Export.hxx"
-
-#include "Definitions.hxx"
-#include "NodeData.hxx"
+#include "QtNodes/Definitions.hxx"
+#include "QtNodes/Export.hxx"
+#include "QtNodes/NodeData.hxx"
 
 namespace QtNodes {
 
@@ -21,25 +19,31 @@ class NodeGraphicsObject;
 class NODE_EDITOR_PUBLIC NodeState
 {
 public:
-    NodeState(NodeGraphicsObject &ngo);
+    NodeState(NodeGraphicsObject& ngo);
 
 public:
-    bool hovered() const { return _hovered; }
+    bool hovered() const
+    {
+        return _hovered;
+    }
 
-    void setHovered(bool hovered = true) { _hovered = hovered; }
+    void setHovered(bool hovered = true)
+    {
+        _hovered = hovered;
+    }
 
     void setResizing(bool resizing);
 
     bool resizing() const;
 
-    ConnectionGraphicsObject const *connectionForReaction() const;
+    const ConnectionGraphicsObject* connectionForReaction() const;
 
-    void storeConnectionForReaction(ConnectionGraphicsObject const *cgo);
+    void storeConnectionForReaction(const ConnectionGraphicsObject* cgo);
 
     void resetConnectionForReaction();
 
 private:
-    NodeGraphicsObject &_ngo;
+    NodeGraphicsObject& _ngo;
 
     bool _hovered;
 
@@ -47,7 +51,7 @@ private:
 
     // QPointer tracks the QObject inside and is automatically cleared
     // when the object is destroyed.
-    QPointer<ConnectionGraphicsObject const> _connectionForReaction;
+    QPointer<const ConnectionGraphicsObject> _connectionForReaction;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

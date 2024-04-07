@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AbstractNodeGeometry.hxx"
+#include "QtNodes/AbstractNodeGeometry.hxx"
 
 #include <QtGui/QFontMetrics>
 

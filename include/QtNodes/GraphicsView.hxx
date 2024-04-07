@@ -2,7 +2,7 @@
 
 #include <QtWidgets/QGraphicsView>
 
-#include "Export.hxx"
+#include "QtNodes/Export.hxx"
 
 namespace QtNodes {
 
@@ -14,6 +14,7 @@ class BasicGraphicsScene;
 class NODE_EDITOR_PUBLIC GraphicsView : public QGraphicsView
 {
     Q_OBJECT
+
 public:
     struct ScaleRange
     {
@@ -22,17 +23,17 @@ public:
     };
 
 public:
-    GraphicsView(QWidget *parent = Q_NULLPTR);
-    GraphicsView(BasicGraphicsScene *scene, QWidget *parent = Q_NULLPTR);
+    GraphicsView(QWidget* parent = Q_NULLPTR);
+    GraphicsView(BasicGraphicsScene* scene, QWidget* parent = Q_NULLPTR);
 
-    GraphicsView(const GraphicsView &) = delete;
-    GraphicsView operator=(const GraphicsView &) = delete;
+    GraphicsView(const GraphicsView&)           = delete;
+    GraphicsView operator=(const GraphicsView&) = delete;
 
-    QAction *clearSelectionAction() const;
+    QAction* clearSelectionAction() const;
 
-    QAction *deleteSelectionAction() const;
+    QAction* deleteSelectionAction() const;
 
-    void setScene(BasicGraphicsScene *scene);
+    void setScene(BasicGraphicsScene* scene);
 
     void centerScene();
 
@@ -62,37 +63,37 @@ Q_SIGNALS:
     void scaleChanged(double scale);
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *event) override;
+    void contextMenuEvent(QContextMenuEvent* event) override;
 
-    void wheelEvent(QWheelEvent *event) override;
+    void wheelEvent(QWheelEvent* event) override;
 
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
-    void keyReleaseEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
 
-    void mousePressEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
-    void drawBackground(QPainter *painter, const QRectF &r) override;
+    void drawBackground(QPainter* painter, const QRectF& r) override;
 
-    void showEvent(QShowEvent *event) override;
+    void showEvent(QShowEvent* event) override;
 
 protected:
-    BasicGraphicsScene *nodeScene();
+    BasicGraphicsScene* nodeScene();
 
     /// Computes scene position for pasting the copied/duplicated node groups.
     QPointF scenePastePosition();
 
 private:
-    QAction *_clearSelectionAction = nullptr;
-    QAction *_deleteSelectionAction = nullptr;
-    QAction *_duplicateSelectionAction = nullptr;
-    QAction *_copySelectionAction = nullptr;
-    QAction *_pasteAction = nullptr;
+    QAction* _clearSelectionAction     = nullptr;
+    QAction* _deleteSelectionAction    = nullptr;
+    QAction* _duplicateSelectionAction = nullptr;
+    QAction* _copySelectionAction      = nullptr;
+    QAction* _pasteAction              = nullptr;
 
-    QPointF _clickPos;
+    QPointF    _clickPos;
     ScaleRange _scaleRange;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

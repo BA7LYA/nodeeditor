@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Definitions.hxx"
-
-#include <QUndoCommand>
 #include <QtCore/QJsonObject>
 #include <QtCore/QPointF>
-
+#include <QUndoCommand>
 #include <unordered_set>
+
+#include "QtNodes/Definitions.hxx"
 
 namespace QtNodes {
 
@@ -16,17 +15,18 @@ class CreateCommand : public QUndoCommand
 {
 public:
     CreateCommand(
-        BasicGraphicsScene *scene,
-        QString const name,
-        QPointF const &mouseScenePos);
+        BasicGraphicsScene* scene,
+        const QString       name,
+        const QPointF&      mouseScenePos
+    );
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
-    NodeId _nodeId;
-    QJsonObject _sceneJson;
+    BasicGraphicsScene* _scene;
+    NodeId              _nodeId;
+    QJsonObject         _sceneJson;
 };
 
 /**
@@ -36,50 +36,50 @@ private:
 class DeleteCommand : public QUndoCommand
 {
 public:
-    DeleteCommand(BasicGraphicsScene *scene);
+    DeleteCommand(BasicGraphicsScene* scene);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
-    QJsonObject _sceneJson;
+    BasicGraphicsScene* _scene;
+    QJsonObject         _sceneJson;
 };
 
 class CopyCommand : public QUndoCommand
 {
 public:
-    CopyCommand(BasicGraphicsScene *scene);
+    CopyCommand(BasicGraphicsScene* scene);
 };
 
 class PasteCommand : public QUndoCommand
 {
 public:
-    PasteCommand(BasicGraphicsScene *scene, QPointF const &mouseScenePos);
+    PasteCommand(BasicGraphicsScene* scene, const QPointF& mouseScenePos);
 
     void undo() override;
     void redo() override;
 
 private:
     QJsonObject takeSceneJsonFromClipboard();
-    QJsonObject makeNewNodeIdsInScene(QJsonObject const &sceneJson);
+    QJsonObject makeNewNodeIdsInScene(const QJsonObject& sceneJson);
 
 private:
-    BasicGraphicsScene *_scene;
-    QPointF const &_mouseScenePos;
-    QJsonObject _newSceneJson;
+    BasicGraphicsScene* _scene;
+    const QPointF&      _mouseScenePos;
+    QJsonObject         _newSceneJson;
 };
 
 class DisconnectCommand : public QUndoCommand
 {
 public:
-    DisconnectCommand(BasicGraphicsScene *scene, ConnectionId const);
+    DisconnectCommand(BasicGraphicsScene* scene, const ConnectionId);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
+    BasicGraphicsScene* _scene;
 
     ConnectionId _connId;
 };
@@ -87,13 +87,13 @@ private:
 class ConnectCommand : public QUndoCommand
 {
 public:
-    ConnectCommand(BasicGraphicsScene *scene, ConnectionId const);
+    ConnectCommand(BasicGraphicsScene* scene, const ConnectionId);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
+    BasicGraphicsScene* _scene;
 
     ConnectionId _connId;
 };
@@ -101,26 +101,27 @@ private:
 class MoveNodeCommand : public QUndoCommand
 {
 public:
-    MoveNodeCommand(BasicGraphicsScene *scene, QPointF const &diff);
+    MoveNodeCommand(BasicGraphicsScene* scene, const QPointF& diff);
 
     void undo() override;
     void redo() override;
 
     /**
-     * A command ID is used in command compression. It must be an integer unique to
-     * this command's class, or -1 if the command doesn't support compression.
+     * A command ID is used in command compression. It must be an integer unique
+     * to this command's class, or -1 if the command doesn't support
+     * compression.
      */
     int id() const override;
 
     /**
      * Several sequential movements could be merged into one command.
      */
-    bool mergeWith(QUndoCommand const *c) override;
+    bool mergeWith(const QUndoCommand* c) override;
 
 private:
-    BasicGraphicsScene *_scene;
+    BasicGraphicsScene*        _scene;
     std::unordered_set<NodeId> _selectedNodes;
-    QPointF _diff;
+    QPointF                    _diff;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

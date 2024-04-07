@@ -7,7 +7,6 @@
 // As of 5.14 there is a specialization std::hash<QString>
 
 #include <functional>
-
 #include <QtCore/QString>
 #include <QtCore/QVariant>
 
@@ -15,8 +14,11 @@ namespace std {
 template<>
 struct hash<QString>
 {
-    inline std::size_t operator()(QString const &s) const { return qHash(s); }
+    inline std::size_t operator()(const QString& s) const
+    {
+        return qHash(s);
+    }
 };
-} // namespace std
+}  // namespace std
 
 #endif

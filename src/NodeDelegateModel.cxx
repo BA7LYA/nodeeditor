@@ -1,6 +1,6 @@
-#include "NodeDelegateModel.hxx"
+#include "QtNodes/NodeDelegateModel.hxx"
 
-#include "StyleCollection.hxx"
+#include "QtNodes/StyleCollection.hxx"
 
 namespace QtNodes {
 
@@ -19,37 +19,35 @@ QJsonObject NodeDelegateModel::save() const
     return modelJson;
 }
 
-void NodeDelegateModel::load(QJsonObject const &)
+void NodeDelegateModel::load(const QJsonObject&)
 {
     //
 }
 
 ConnectionPolicy NodeDelegateModel::portConnectionPolicy(
-    PortType portType, PortIndex) const
+    PortType portType,
+    PortIndex
+) const
 {
     auto result = ConnectionPolicy::One;
-    switch (portType) {
-    case PortType::In:
-        result = ConnectionPolicy::One;
-        break;
-    case PortType::Out:
-        result = ConnectionPolicy::Many;
-        break;
-    case PortType::None:
-        break;
+    switch (portType)
+    {
+    case PortType::In: result = ConnectionPolicy::One; break;
+    case PortType::Out: result = ConnectionPolicy::Many; break;
+    case PortType::None: break;
     }
 
     return result;
 }
 
-NodeStyle const &NodeDelegateModel::nodeStyle() const
+const NodeStyle& NodeDelegateModel::nodeStyle() const
 {
     return _nodeStyle;
 }
 
-void NodeDelegateModel::setNodeStyle(NodeStyle const &style)
+void NodeDelegateModel::setNodeStyle(const NodeStyle& style)
 {
     _nodeStyle = style;
 }
 
-} // namespace QtNodes
+}  // namespace QtNodes

@@ -1,18 +1,18 @@
 set(CALC_SOURCE_FILES
-  main.cpp
-  MathOperationDataModel.cpp
-  NumberDisplayDataModel.cpp
-  NumberSourceDataModel.cpp
+  main.cxx
+  MathOperationDataModel.cxx
+  NumberDisplayDataModel.cxx
+  NumberSourceDataModel.cxx
 )
 
 set(CALC_HEADER_FILES
-  AdditionModel.hpp
-  DivisionModel.hpp
-  DecimalData.hpp
-  MathOperationDataModel.hpp
-  NumberDisplayDataModel.hpp
-  NumberSourceDataModel.hpp
-  SubtractionModel.hpp
+  AdditionModel.hxx
+  DivisionModel.hxx
+  DecimalData.hxx
+  MathOperationDataModel.hxx
+  NumberDisplayDataModel.hxx
+  NumberSourceDataModel.hxx
+  SubtractionModel.hxx
 )
 
 add_executable(calculator
@@ -22,13 +22,11 @@ add_executable(calculator
 
 target_link_libraries(calculator QtNodes)
 
-
-
 set(HEADLESS_CALC_SOURCE_FILES
-  headless_main.cpp
-  MathOperationDataModel.cpp
-  NumberDisplayDataModel.cpp
-  NumberSourceDataModel.cpp
+  headless_main.cxx
+  MathOperationDataModel.cxx
+  NumberDisplayDataModel.cxx
+  NumberSourceDataModel.cxx
 )
 
 add_executable(headless_calculator 

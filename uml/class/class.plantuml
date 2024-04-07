@@ -1,14 +1,65 @@
 @startuml class
 
-' !pragma layout elk
 skinparam dpi 300
 skinparam defaultFontName Consolas
-set separator ::
+set namespaceSeparator ::
 
-namespace qtnodes {
+namespace nodeeditor {
 
+    interface AbstractGraphModel {}
+    interface AbstractNodeGeometry {}
+    interface AbstractNodePainter {}
+    class BasicGraphicsScene {}
+    class ConnectionGraphicsObject {}
+    class ConnectionPainter {}
+    class ConnectionState {}
+    class ConnectionStyle {}
+    class Style {}
+    class DataFlowGraphicsScene {}
+    class DataFlowGraphModel {}
+    class DefaultHorizontalNodeGeometry {}
+    class DefaultVerticalNodeGeometry {}
+    class DefaultNodePainter {}
+    class GraphicsView {}
+    class CreateCommand {}
+    class StyleCollection {}
+    class NodeStyle {}
+    class NodeState {}
+    class NodeGraphicsObject {}
+    class NodeDelegateModelRegistry {}
+    class NodeDelegateModel {}
 
-
+    AbstractNodeGeometry *-down- AbstractGraphModel
+    BasicGraphicsScene *-down- AbstractGraphModel
+    ConnectionGraphicsObject *-down- AbstractGraphModel
+    ConnectionPainter -down- ConnectionGraphicsObject
+    ConnectionState -down- ConnectionGraphicsObject
+    ConnectionStyle -down-|> Style
+    DataFlowGraphicsScene -down-|> BasicGraphicsScene
+    DataFlowGraphModel -down-|> AbstractGraphModel
+    DataFlowGraphModel -down-|> Serializable
+    DefaultHorizontalNodeGeometry -down-|> AbstractNodeGeometry
+    DefaultVerticalNodeGeometry -down-|> AbstractNodeGeometry
+    DefaultNodePainter -down-|> AbstractNodePainter
+    NodeStyle -down-|> Style
+    NodeDelegateModel -down-|> Serializable
 }
+
+namespace qt {
+
+	class QObject {}
+    class QGraphicsView {}
+    class QGraphicsScene {}
+    class QGraphicsObject {}
+    class QUndoCommand {}
+}
+
+nodeeditor::AbstractGraphModel -down-|> qt::QObject
+nodeeditor::BasicGraphicsScene -down-|> qt::QGraphicsScene
+nodeeditor::ConnectionGraphicsObject -down-|> qt::QGraphicsObject
+nodeeditor::GraphicsView -down-|> qt::QGraphicsView
+nodeeditor::CreateCommand -down-|> qt::QUndoCommand
+nodeeditor::NodeGraphicsObject -down-|> qt::QGraphicsObject
+nodeeditor::NodeDelegateModel -down-|> qt::QObject
 
 @enduml

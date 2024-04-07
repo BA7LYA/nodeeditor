@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
-cmake_policy(SET CMP0072 NEW) # new in 3.11. The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
-cmake_policy(SET CMP0068 NEW) # new in 3.9. The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
+# new in 3.9.
+# The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
+cmake_policy(SET CMP0068 NEW)
+
+# new in 3.11.
+# The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
+cmake_policy(SET CMP0072 NEW)
 
 project(QtNodesLibrary CXX)
 
@@ -14,18 +19,9 @@ set(CMAKE_DISABLE_SOURCE_CHANGES  ON)
 set(OpenGL_GL_PREFERENCE LEGACY)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-get_directory_property(_has_parent PARENT_DIRECTORY)
-if(_has_parent)
-  set(is_root_project OFF)
-else()
-  set(is_root_project ON)
-endif()
-
-set(QT_NODES_DEVELOPER_DEFAULTS "${is_root_project}" CACHE BOOL "Turns on default settings for development of QtNodes")
-
-option(BUILD_TESTING "Build tests" "${QT_NODES_DEVELOPER_DEFAULTS}")
-option(BUILD_EXAMPLES "Build Examples" "${QT_NODES_DEVELOPER_DEFAULTS}")
-option(BUILD_DOCS "Build Documentation" "${QT_NODES_DEVELOPER_DEFAULTS}")
+option(BUILD_TESTING "Build tests" OFF)
+option(BUILD_EXAMPLES "Build Examples" OFF)
+option(BUILD_DOCS "Build Documentation" OFF)
 option(BUILD_SHARED_LIBS "Build as shared library" ON)
 option(BUILD_DEBUG_POSTFIX_D "Append d suffix to debug libraries" OFF)
 option(QT_NODES_FORCE_TEST_COLOR "Force colorized unit test output" OFF)
@@ -45,8 +41,6 @@ if(BUILD_DEBUG_POSTFIX_D)
   set(CMAKE_RELWITHDEBINFO_POSTFIX "rd")
   set(CMAKE_MINSIZEREL_POSTFIX "s")
 endif()
-
-# add_subdirectory(external)
 
 if(USE_QT6)
   find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
@@ -175,8 +169,6 @@ endif()
 target_sources(QtNodes PRIVATE ${nodes_moc})
 
 ###########
-# Examples
-##
 
 if(BUILD_EXAMPLES)
   add_subdirectory(examples)
@@ -185,10 +177,6 @@ endif()
 if(BUILD_DOCS)
   add_subdirectory(docs)
 endif()
-
-##################
-# Automated Tests
-##
 
 if(BUILD_TESTING)
   #add_subdirectory(test)

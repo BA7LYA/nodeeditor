@@ -1,11 +1,10 @@
 #pragma once
 
+#include <functional>
+#include <memory>
 #include <QtCore/QUuid>
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QMenu>
-
-#include <functional>
-#include <memory>
 #include <tuple>
 #include <unordered_map>
 
@@ -14,7 +13,6 @@
 #include "ConnectionIdHash.hpp"
 #include "Definitions.hpp"
 #include "Export.hpp"
-
 #include "QUuidStdHash.hpp"
 
 class QUndoStack;
@@ -31,8 +29,12 @@ class NodeStyle;
 class NODE_EDITOR_PUBLIC BasicGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
+
 public:
-    BasicGraphicsScene(AbstractGraphModel &graphModel, QObject *parent = nullptr);
+    BasicGraphicsScene(
+        AbstractGraphModel& graphModel,
+        QObject*            parent = nullptr
+    );
 
     // Scenes without models are not supported
     BasicGraphicsScene() = delete;
@@ -41,36 +43,37 @@ public:
 
 public:
     /// @returns associated AbstractGraphModel.
-    AbstractGraphModel const &graphModel() const;
+    const AbstractGraphModel& graphModel() const;
 
-    AbstractGraphModel &graphModel();
+    AbstractGraphModel& graphModel();
 
-    AbstractNodeGeometry &nodeGeometry();
+    AbstractNodeGeometry& nodeGeometry();
 
-    AbstractNodePainter &nodePainter();
+    AbstractNodePainter& nodePainter();
 
     void setNodePainter(std::unique_ptr<AbstractNodePainter> newPainter);
 
-    QUndoStack &undoStack();
+    QUndoStack& undoStack();
 
 public:
     /// Creates a "draft" instance of ConnectionGraphicsObject.
     /**
-   * The scene caches a "draft" connection which has one loose end.
-   * After attachment the "draft" instance is deleted and instead a
-   * normal "full" connection is created.
-   * Function @returns the "draft" instance for further geometry
-   * manipulations.
-   */
-    std::unique_ptr<ConnectionGraphicsObject> const &makeDraftConnection(
-        ConnectionId const newConnectionId);
+     * The scene caches a "draft" connection which has one loose end.
+     * After attachment the "draft" instance is deleted and instead a
+     * normal "full" connection is created.
+     * Function @returns the "draft" instance for further geometry
+     * manipulations.
+     */
+    const std::unique_ptr<ConnectionGraphicsObject>& makeDraftConnection(
+        const ConnectionId newConnectionId
+    );
 
     /// Deletes "draft" connection.
     /**
-   * The function is called when user releases the mouse button during
-   * the construction of the new connection without attaching it to any
-   * node.
-   */
+     * The function is called when user releases the mouse button during
+     * the construction of the new connection without attaching it to any
+     * node.
+     */
     void resetDraftConnection();
 
     /// Deletes all the nodes. Connections are removed automatically.
@@ -79,90 +82,104 @@ public:
 public:
     /// @returns NodeGraphicsObject associated with the given nodeId.
     /**
-   * @returns nullptr when the object is not found.
-   */
-    NodeGraphicsObject *nodeGraphicsObject(NodeId nodeId);
+     * @returns nullptr when the object is not found.
+     */
+    NodeGraphicsObject* nodeGraphicsObject(NodeId nodeId);
 
     /// @returns ConnectionGraphicsObject corresponding to `connectionId`.
     /**
-   * @returns `nullptr` when the object is not found.
-   */
-    ConnectionGraphicsObject *connectionGraphicsObject(ConnectionId connectionId);
+     * @returns `nullptr` when the object is not found.
+     */
+    ConnectionGraphicsObject* connectionGraphicsObject(ConnectionId connectionId
+    );
 
-    Qt::Orientation orientation() const { return _orientation; }
+    Qt::Orientation orientation() const
+    {
+        return _orientation;
+    }
 
-    void setOrientation(Qt::Orientation const orientation);
+    void setOrientation(const Qt::Orientation orientation);
 
 public:
     /// Can @return an instance of the scene context menu in subclass.
     /**
-   * Default implementation returns `nullptr`.
-   */
-    virtual QMenu *createSceneMenu(QPointF const scenePos);
+     * Default implementation returns `nullptr`.
+     */
+    virtual QMenu* createSceneMenu(const QPointF scenePos);
 
 Q_SIGNALS:
-    void modified(BasicGraphicsScene *);
+    void modified(BasicGraphicsScene*);
 
-    void nodeMoved(NodeId const nodeId, QPointF const &newLocation);
+    void nodeMoved(const NodeId nodeId, const QPointF& newLocation);
 
-    void nodeClicked(NodeId const nodeId);
+    void nodeClicked(const NodeId nodeId);
 
-    void nodeSelected(NodeId const nodeId);
+    void nodeSelected(const NodeId nodeId);
 
-    void nodeDoubleClicked(NodeId const nodeId);
+    void nodeDoubleClicked(const NodeId nodeId);
 
-    void nodeHovered(NodeId const nodeId, QPoint const screenPos);
+    void nodeHovered(const NodeId nodeId, const QPoint screenPos);
 
-    void nodeHoverLeft(NodeId const nodeId);
+    void nodeHoverLeft(const NodeId nodeId);
 
-    void connectionHovered(ConnectionId const connectionId, QPoint const screenPos);
+    void connectionHovered(
+        const ConnectionId connectionId,
+        const QPoint       screenPos
+    );
 
-    void connectionHoverLeft(ConnectionId const connectionId);
+    void connectionHoverLeft(const ConnectionId connectionId);
 
     /// Signal allows showing custom context menu upon clicking a node.
-    void nodeContextMenu(NodeId const nodeId, QPointF const pos);
+    void nodeContextMenu(const NodeId nodeId, const QPointF pos);
 
 private:
     /// @brief Creates Node and Connection graphics objects.
     /**
-   * Function is used to populate an empty scene in the constructor. We
-   * perform depth-first AbstractGraphModel traversal. The connections are
-   * created by checking non-empty node `Out` ports.
-   */
+     * Function is used to populate an empty scene in the constructor. We
+     * perform depth-first AbstractGraphModel traversal. The connections are
+     * created by checking non-empty node `Out` ports.
+     */
     void traverseGraphAndPopulateGraphicsObjects();
 
     /// Redraws adjacent nodes for given `connectionId`
-    void updateAttachedNodes(ConnectionId const connectionId, PortType const portType);
+    void updateAttachedNodes(
+        const ConnectionId connectionId,
+        const PortType     portType
+    );
 
 public Q_SLOTS:
-    /// Slot called when the `connectionId` is erased form the AbstractGraphModel.
-    void onConnectionDeleted(ConnectionId const connectionId);
+    /// Slot called when the `connectionId` is erased form the
+    /// AbstractGraphModel.
+    void onConnectionDeleted(const ConnectionId connectionId);
 
-    /// Slot called when the `connectionId` is created in the AbstractGraphModel.
-    void onConnectionCreated(ConnectionId const connectionId);
+    /// Slot called when the `connectionId` is created in the
+    /// AbstractGraphModel.
+    void onConnectionCreated(const ConnectionId connectionId);
 
-    void onNodeDeleted(NodeId const nodeId);
+    void onNodeDeleted(const NodeId nodeId);
 
-    void onNodeCreated(NodeId const nodeId);
+    void onNodeCreated(const NodeId nodeId);
 
-    void onNodePositionUpdated(NodeId const nodeId);
+    void onNodePositionUpdated(const NodeId nodeId);
 
-    void onNodeUpdated(NodeId const nodeId);
+    void onNodeUpdated(const NodeId nodeId);
 
-    void onNodeClicked(NodeId const nodeId);
+    void onNodeClicked(const NodeId nodeId);
 
     void onModelReset();
 
 private:
-    AbstractGraphModel &_graphModel;
+    AbstractGraphModel& _graphModel;
 
     using UniqueNodeGraphicsObject = std::unique_ptr<NodeGraphicsObject>;
 
-    using UniqueConnectionGraphicsObject = std::unique_ptr<ConnectionGraphicsObject>;
+    using UniqueConnectionGraphicsObject
+        = std::unique_ptr<ConnectionGraphicsObject>;
 
     std::unordered_map<NodeId, UniqueNodeGraphicsObject> _nodeGraphicsObjects;
 
-    std::unordered_map<ConnectionId, UniqueConnectionGraphicsObject> _connectionGraphicsObjects;
+    std::unordered_map<ConnectionId, UniqueConnectionGraphicsObject>
+        _connectionGraphicsObjects;
 
     std::unique_ptr<ConnectionGraphicsObject> _draftConnection;
 
@@ -172,9 +189,9 @@ private:
 
     bool _nodeDrag;
 
-    QUndoStack *_undoStack;
+    QUndoStack* _undoStack;
 
     Qt::Orientation _orientation;
 };
 
-} // namespace QtNodes
+}  // namespace QtNodes

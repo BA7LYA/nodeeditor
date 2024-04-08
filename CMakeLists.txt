@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 
-cmake_policy(SET CMP0072 NEW) # new in 3.11. The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
-cmake_policy(SET CMP0068 NEW) # new in 3.9. The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
+# new in 3.11.
+# The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
+cmake_policy(SET CMP0072 NEW)
 
+# new in 3.9.
+# The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
+cmake_policy(SET CMP0068 NEW)
 
 project(QtNodesLibrary CXX)
 
@@ -13,18 +17,9 @@ set(CMAKE_DISABLE_SOURCE_CHANGES  ON)
 set(OpenGL_GL_PREFERENCE LEGACY)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-get_directory_property(_has_parent PARENT_DIRECTORY)
-if(_has_parent)
-  set(is_root_project OFF)
-else()
-  set(is_root_project ON)
-endif()
-
-set(QT_NODES_DEVELOPER_DEFAULTS "${is_root_project}" CACHE BOOL "Turns on default settings for development of QtNodes")
-
-option(BUILD_TESTING "Build tests" "${QT_NODES_DEVELOPER_DEFAULTS}")
-option(BUILD_EXAMPLES "Build Examples" "${QT_NODES_DEVELOPER_DEFAULTS}")
-option(BUILD_DOCS "Build Documentation" "${QT_NODES_DEVELOPER_DEFAULTS}")
+option(BUILD_TESTING "Build tests" ON)
+option(BUILD_EXAMPLES "Build Examples" ON)
+option(BUILD_DOCS "Build Documentation" ON)
 option(BUILD_SHARED_LIBS "Build as shared library" ON)
 option(BUILD_DEBUG_POSTFIX_D "Append d suffix to debug libraries" OFF)
 option(QT_NODES_FORCE_TEST_COLOR "Force colorized unit test output" OFF)

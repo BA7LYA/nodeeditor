@@ -4,39 +4,53 @@
 
 namespace QtNodes {
 
-void AbstractGraphModel::portsAboutToBeDeleted(NodeId const nodeId,
-                                               PortType const portType,
-                                               PortIndex const first,
-                                               PortIndex const last)
+void AbstractGraphModel::portsAboutToBeDeleted(
+    const NodeId    nodeId,
+    const PortType  portType,
+    const PortIndex first,
+    const PortIndex last
+)
 {
     _shiftedByDynamicPortsConnections.clear();
 
-    auto portCountRole = portType == PortType::In ? NodeRole::InPortCount : NodeRole::OutPortCount;
+    auto portCountRole = portType == PortType::In ? NodeRole::InPortCount
+                                                  : NodeRole::OutPortCount;
 
     unsigned int portCount = nodeData(nodeId, portCountRole).toUInt();
 
     if (first > portCount - 1)
+    {
         return;
+    }
 
     if (last < first)
+    {
         return;
+    }
 
     auto clampedLast = std::min(last, portCount - 1);
 
-    for (PortIndex portIndex = first; portIndex <= clampedLast; ++portIndex) {
-        std::unordered_set<ConnectionId> conns = connections(nodeId, portType, portIndex);
+    for (PortIndex portIndex = first; portIndex <= clampedLast; ++portIndex)
+    {
+        std::unordered_set<ConnectionId> conns
+            = connections(nodeId, portType, portIndex);
 
-        for (auto connectionId : conns) {
+        for (auto connectionId : conns)
+        {
             deleteConnection(connectionId);
         }
     }
 
-    std::size_t const nRemovedPorts = clampedLast - first + 1;
+    const std::size_t nRemovedPorts = clampedLast - first + 1;
 
-    for (PortIndex portIndex = clampedLast + 1; portIndex < portCount; ++portIndex) {
-        std::unordered_set<ConnectionId> conns = connections(nodeId, portType, portIndex);
+    for (PortIndex portIndex = clampedLast + 1; portIndex < portCount;
+         ++portIndex)
+    {
+        std::unordered_set<ConnectionId> conns
+            = connections(nodeId, portType, portIndex);
 
-        for (auto connectionId : conns) {
+        for (auto connectionId : conns)
+        {
             // Erases the information about the port on one side;
             auto c = makeIncompleteConnectionId(connectionId, portType);
 
@@ -51,36 +65,47 @@ void AbstractGraphModel::portsAboutToBeDeleted(NodeId const nodeId,
 
 void AbstractGraphModel::portsDeleted()
 {
-    for (auto const connectionId : _shiftedByDynamicPortsConnections) {
+    for (const auto connectionId : _shiftedByDynamicPortsConnections)
+    {
         addConnection(connectionId);
     }
 
     _shiftedByDynamicPortsConnections.clear();
 }
 
-void AbstractGraphModel::portsAboutToBeInserted(NodeId const nodeId,
-                                                PortType const portType,
-                                                PortIndex const first,
-                                                PortIndex const last)
+void AbstractGraphModel::portsAboutToBeInserted(
+    const NodeId    nodeId,
+    const PortType  portType,
+    const PortIndex first,
+    const PortIndex last
+)
 {
     _shiftedByDynamicPortsConnections.clear();
 
-    auto portCountRole = portType == PortType::In ? NodeRole::InPortCount : NodeRole::OutPortCount;
+    auto portCountRole = portType == PortType::In ? NodeRole::InPortCount
+                                                  : NodeRole::OutPortCount;
 
     unsigned int portCount = nodeData(nodeId, portCountRole).toUInt();
 
     if (first > portCount)
+    {
         return;
+    }
 
     if (last < first)
+    {
         return;
+    }
 
-    std::size_t const nNewPorts = last - first + 1;
+    const std::size_t nNewPorts = last - first + 1;
 
-    for (PortIndex portIndex = first; portIndex < portCount; ++portIndex) {
-        std::unordered_set<ConnectionId> conns = connections(nodeId, portType, portIndex);
+    for (PortIndex portIndex = first; portIndex < portCount; ++portIndex)
+    {
+        std::unordered_set<ConnectionId> conns
+            = connections(nodeId, portType, portIndex);
 
-        for (auto connectionId : conns) {
+        for (auto connectionId : conns)
+        {
             // Erases the information about the port on one side;
             auto c = makeIncompleteConnectionId(connectionId, portType);
 
@@ -95,11 +120,12 @@ void AbstractGraphModel::portsAboutToBeInserted(NodeId const nodeId,
 
 void AbstractGraphModel::portsInserted()
 {
-    for (auto const connectionId : _shiftedByDynamicPortsConnections) {
+    for (const auto connectionId : _shiftedByDynamicPortsConnections)
+    {
         addConnection(connectionId);
     }
 
     _shiftedByDynamicPortsConnections.clear();
 }
 
-} // namespace QtNodes
+}  // namespace QtNodes

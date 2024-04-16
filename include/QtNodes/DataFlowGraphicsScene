@@ -1,1 +1,1 @@
-#include "internal/DataFlowGraphicsScene.hpp"
+#include "internal/DataFlowGraphicsScene.hxx"

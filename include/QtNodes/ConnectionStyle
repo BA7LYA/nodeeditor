@@ -1,1 +1,1 @@
-#include "internal/ConnectionStyle.hpp"
+#include "internal/ConnectionStyle.hxx"

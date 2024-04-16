@@ -1,1 +1,1 @@
-#include "internal/AbstractGraphModel.hpp"
+#include "internal/AbstractGraphModel.hxx"

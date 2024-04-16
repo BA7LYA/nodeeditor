@@ -1,1 +1,1 @@
-#include "internal/GraphicsViewStyle.hpp"
+#include "internal/GraphicsViewStyle.hxx"

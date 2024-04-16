@@ -1,2 +1,2 @@
-#include "internal/NodeGeometry.hpp"
+#include "internal/NodeGeometry.hxx"
 

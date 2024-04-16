@@ -1,1 +1,1 @@
-#include "internal/GraphicsView.hpp"
+#include "internal/GraphicsView.hxx"

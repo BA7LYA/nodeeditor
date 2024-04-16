@@ -66,68 +66,68 @@ endif()
 set(CMAKE_AUTOMOC ON)
 
 set(CPP_SOURCE_FILES
-  src/AbstractGraphModel.cpp
-  src/AbstractNodeGeometry.cpp
-  src/BasicGraphicsScene.cpp
-  src/ConnectionGraphicsObject.cpp
-  src/ConnectionPainter.cpp
-  src/ConnectionState.cpp
-  src/ConnectionStyle.cpp
-  src/DataFlowGraphModel.cpp
-  src/DataFlowGraphicsScene.cpp
-  src/DefaultHorizontalNodeGeometry.cpp
-  src/DefaultVerticalNodeGeometry.cpp
-  src/Definitions.cpp
-  src/GraphicsView.cpp
-  src/GraphicsViewStyle.cpp
-  src/NodeDelegateModelRegistry.cpp
-  src/NodeConnectionInteraction.cpp
-  src/NodeDelegateModel.cpp
-  src/NodeGraphicsObject.cpp
-  src/DefaultNodePainter.cpp
-  src/NodeState.cpp
-  src/NodeStyle.cpp
-  src/StyleCollection.cpp
-  src/UndoCommands.cpp
-  src/locateNode.cpp
+  src/AbstractGraphModel.cxx
+  src/AbstractNodeGeometry.cxx
+  src/BasicGraphicsScene.cxx
+  src/ConnectionGraphicsObject.cxx
+  src/ConnectionPainter.cxx
+  src/ConnectionState.cxx
+  src/ConnectionStyle.cxx
+  src/DataFlowGraphModel.cxx
+  src/DataFlowGraphicsScene.cxx
+  src/DefaultHorizontalNodeGeometry.cxx
+  src/DefaultVerticalNodeGeometry.cxx
+  src/Definitions.cxx
+  src/GraphicsView.cxx
+  src/GraphicsViewStyle.cxx
+  src/NodeDelegateModelRegistry.cxx
+  src/NodeConnectionInteraction.cxx
+  src/NodeDelegateModel.cxx
+  src/NodeGraphicsObject.cxx
+  src/DefaultNodePainter.cxx
+  src/NodeState.cxx
+  src/NodeStyle.cxx
+  src/StyleCollection.cxx
+  src/UndoCommands.cxx
+  src/locateNode.cxx
 )
 
 set(HPP_HEADER_FILES
-  include/QtNodes/internal/AbstractGraphModel.hpp
-  include/QtNodes/internal/AbstractNodeGeometry.hpp
-  include/QtNodes/internal/AbstractNodePainter.hpp
-  include/QtNodes/internal/BasicGraphicsScene.hpp
-  include/QtNodes/internal/Compiler.hpp
-  include/QtNodes/internal/ConnectionGraphicsObject.hpp
-  include/QtNodes/internal/ConnectionIdHash.hpp
-  include/QtNodes/internal/ConnectionIdUtils.hpp
-  include/QtNodes/internal/ConnectionState.hpp
-  include/QtNodes/internal/ConnectionStyle.hpp
-  include/QtNodes/internal/DataFlowGraphicsScene.hpp
-  include/QtNodes/internal/DataFlowGraphModel.hpp
-  include/QtNodes/internal/DefaultNodePainter.hpp
-  include/QtNodes/internal/Definitions.hpp
-  include/QtNodes/internal/Export.hpp
-  include/QtNodes/internal/GraphicsView.hpp
-  include/QtNodes/internal/GraphicsViewStyle.hpp
-  include/QtNodes/internal/locateNode.hpp
-  include/QtNodes/internal/NodeData.hpp
-  include/QtNodes/internal/NodeDelegateModel.hpp
-  include/QtNodes/internal/NodeDelegateModelRegistry.hpp
-  include/QtNodes/internal/NodeGraphicsObject.hpp
-  include/QtNodes/internal/NodeState.hpp
-  include/QtNodes/internal/NodeStyle.hpp
-  include/QtNodes/internal/OperatingSystem.hpp
-  include/QtNodes/internal/QStringStdHash.hpp
-  include/QtNodes/internal/QUuidStdHash.hpp
-  include/QtNodes/internal/Serializable.hpp
-  include/QtNodes/internal/Style.hpp
-  include/QtNodes/internal/StyleCollection.hpp
-  src/ConnectionPainter.hpp
-  src/DefaultHorizontalNodeGeometry.hpp
-  src/DefaultVerticalNodeGeometry.hpp
-  src/NodeConnectionInteraction.hpp
-  src/UndoCommands.hpp
+  include/QtNodes/internal/AbstractGraphModel.hxx
+  include/QtNodes/internal/AbstractNodeGeometry.hxx
+  include/QtNodes/internal/AbstractNodePainter.hxx
+  include/QtNodes/internal/BasicGraphicsScene.hxx
+  include/QtNodes/internal/Compiler.hxx
+  include/QtNodes/internal/ConnectionGraphicsObject.hxx
+  include/QtNodes/internal/ConnectionIdHash.hxx
+  include/QtNodes/internal/ConnectionIdUtils.hxx
+  include/QtNodes/internal/ConnectionState.hxx
+  include/QtNodes/internal/ConnectionStyle.hxx
+  include/QtNodes/internal/DataFlowGraphicsScene.hxx
+  include/QtNodes/internal/DataFlowGraphModel.hxx
+  include/QtNodes/internal/DefaultNodePainter.hxx
+  include/QtNodes/internal/Definitions.hxx
+  include/QtNodes/internal/Export.hxx
+  include/QtNodes/internal/GraphicsView.hxx
+  include/QtNodes/internal/GraphicsViewStyle.hxx
+  include/QtNodes/internal/locateNode.hxx
+  include/QtNodes/internal/NodeData.hxx
+  include/QtNodes/internal/NodeDelegateModel.hxx
+  include/QtNodes/internal/NodeDelegateModelRegistry.hxx
+  include/QtNodes/internal/NodeGraphicsObject.hxx
+  include/QtNodes/internal/NodeState.hxx
+  include/QtNodes/internal/NodeStyle.hxx
+  include/QtNodes/internal/OperatingSystem.hxx
+  include/QtNodes/internal/QStringStdHash.hxx
+  include/QtNodes/internal/QUuidStdHash.hxx
+  include/QtNodes/internal/Serializable.hxx
+  include/QtNodes/internal/Style.hxx
+  include/QtNodes/internal/StyleCollection.hxx
+  src/ConnectionPainter.hxx
+  src/DefaultHorizontalNodeGeometry.hxx
+  src/DefaultVerticalNodeGeometry.hxx
+  src/NodeConnectionInteraction.hxx
+  src/UndoCommands.hxx
 )
 
 # If we want to give the option to build a static library,
@@ -199,7 +199,7 @@ set_target_properties(QtNodes
 # Moc
 ##
 
-file(GLOB_RECURSE HEADERS_TO_MOC include/QtNodes/internal/*.hpp)
+file(GLOB_RECURSE HEADERS_TO_MOC include/QtNodes/internal/*.hxx)
 
 if (${QT_VERSION_MAJOR} EQUAL 6)
   qt_wrap_cpp(nodes_moc

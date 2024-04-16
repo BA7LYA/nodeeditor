@@ -1,1 +1,1 @@
-#include "internal/NodeDelegateModelRegistry.hpp"
+#include "internal/NodeDelegateModelRegistry.hxx"

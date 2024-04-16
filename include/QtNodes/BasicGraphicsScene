@@ -1,1 +1,1 @@
-#include "internal/BasicGraphicsScene.hpp"
+#include "internal/BasicGraphicsScene.hxx"

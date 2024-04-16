@@ -1,1 +1,1 @@
-#include "internal/NodeStyle.hpp"
+#include "internal/NodeStyle.hxx"

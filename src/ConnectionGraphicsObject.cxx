@@ -285,7 +285,6 @@ void ConnectionGraphicsObject::mouseReleaseEvent(QGraphicsSceneMouseEvent* event
     if (ngo)
     {
         NodeConnectionInteraction interaction(*ngo, *this, *nodeScene());
-
         wasConnected = interaction.tryConnect();
     }
 
@@ -326,7 +325,6 @@ std::pair<QPointF, QPointF> ConnectionGraphicsObject::pointsC1C2() const
     switch (nodeScene()->orientation())
     {
     case Qt::Horizontal: return pointsC1C2Horizontal(); break;
-
     case Qt::Vertical: return pointsC1C2Vertical(); break;
     }
 

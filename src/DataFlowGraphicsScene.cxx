@@ -98,7 +98,6 @@ QMenu* DataFlowGraphicsScene::createSceneMenu(const QPointF scenePos)
     modelMenu->addAction(treeViewAction);
 
     auto registry = _graphModel.dataModelRegistry();
-
     for (const auto& cat : registry->categories())
     {
         auto item = new QTreeWidgetItem(treeView);
@@ -195,7 +194,6 @@ bool DataFlowGraphicsScene::save() const
         QDir::homePath(),
         tr("Flow Scene Files (*.flow)")
     );
-
     if (!fileName.isEmpty())
     {
         if (!fileName.endsWith("flow", Qt::CaseInsensitive))
@@ -210,6 +208,7 @@ bool DataFlowGraphicsScene::save() const
             return true;
         }
     }
+
     return false;
 }
 
@@ -221,14 +220,12 @@ bool DataFlowGraphicsScene::load()
         QDir::homePath(),
         tr("Flow Scene Files (*.flow)")
     );
-
     if (!QFileInfo::exists(fileName))
     {
         return false;
     }
 
     QFile file(fileName);
-
     if (!file.open(QIODevice::ReadOnly))
     {
         return false;

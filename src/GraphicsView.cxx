@@ -44,15 +44,11 @@ GraphicsView::GraphicsView(QWidget* parent)
     const auto& flowViewStyle = StyleCollection::flowViewStyle();
 
     setBackgroundBrush(flowViewStyle.BackgroundColor);
-
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-
     setCacheMode(QGraphicsView::CacheBackground);
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-
     setScaleRange(0.3, 2);
 
     // Sets the scene rect to its maximum possible ranges to avoid autu scene
@@ -350,7 +346,6 @@ void GraphicsView::keyPressEvent(QKeyEvent* event)
     switch (event->key())
     {
     case Qt::Key_Shift: setDragMode(QGraphicsView::RubberBandDrag); break;
-
     default: break;
     }
 
@@ -362,7 +357,6 @@ void GraphicsView::keyReleaseEvent(QKeyEvent* event)
     switch (event->key())
     {
     case Qt::Key_Shift: setDragMode(QGraphicsView::ScrollHandDrag); break;
-
     default: break;
     }
     QGraphicsView::keyReleaseEvent(event);
@@ -399,9 +393,10 @@ void GraphicsView::drawBackground(QPainter* painter, const QRectF& r)
 
     auto drawGrid = [&](double gridStep)
     {
-        QRect   windowRect = rect();
-        QPointF tl         = mapToScene(windowRect.topLeft());
-        QPointF br         = mapToScene(windowRect.bottomRight());
+        QRect windowRect = rect();
+
+        QPointF tl = mapToScene(windowRect.topLeft());
+        QPointF br = mapToScene(windowRect.bottomRight());
 
         double left   = std::floor(tl.x() / gridStep - 0.5);
         double right  = std::floor(br.x() / gridStep + 1.0);
@@ -437,12 +432,10 @@ void GraphicsView::drawBackground(QPainter* painter, const QRectF& r)
     const auto& flowViewStyle = StyleCollection::flowViewStyle();
 
     QPen pfine(flowViewStyle.FineGridColor, 1.0);
-
     painter->setPen(pfine);
     drawGrid(15);
 
     QPen p(flowViewStyle.CoarseGridColor, 1.0);
-
     painter->setPen(p);
     drawGrid(150);
 }

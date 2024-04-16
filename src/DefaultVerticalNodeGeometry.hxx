@@ -25,7 +25,6 @@ class NODE_EDITOR_PUBLIC DefaultVerticalNodeGeometry
 public:
     DefaultVerticalNodeGeometry(AbstractGraphModel& graphModel);
 
-public:
     QSize size(const NodeId nodeId) const override;
 
     void recomputeSize(const NodeId nodeId) const override;
@@ -43,10 +42,9 @@ public:
     ) const override;
 
     QPointF captionPosition(const NodeId nodeId) const override;
+    QPointF widgetPosition(const NodeId nodeId) const override;
 
     QRectF captionRect(const NodeId nodeId) const override;
-
-    QPointF widgetPosition(const NodeId nodeId) const override;
 
     QRect resizeHandleRect(const NodeId nodeId) const override;
 
@@ -56,6 +54,7 @@ private:
         const PortType  portType,
         const PortIndex portIndex
     ) const;
+
     /// Finds
     unsigned int maxHorizontalPortsExtent(const NodeId nodeId) const;
 

@@ -25,7 +25,6 @@ class NODE_EDITOR_PUBLIC DefaultHorizontalNodeGeometry
 public:
     DefaultHorizontalNodeGeometry(AbstractGraphModel& graphModel);
 
-public:
     QSize size(const NodeId nodeId) const override;
 
     void recomputeSize(const NodeId nodeId) const override;
@@ -41,11 +40,11 @@ public:
         const PortType  portType,
         const PortIndex PortIndex
     ) const override;
+
     QPointF captionPosition(const NodeId nodeId) const override;
+    QPointF widgetPosition(const NodeId nodeId) const override;
 
     QRectF captionRect(const NodeId nodeId) const override;
-
-    QPointF widgetPosition(const NodeId nodeId) const override;
 
     QRect resizeHandleRect(const NodeId nodeId) const override;
 
@@ -56,7 +55,13 @@ private:
         const PortIndex portIndex
     ) const;
 
-    /// Finds max number of ports and multiplies by (a port height + interval)
+    ///
+    /// @brief Finds max number of ports and multiplies by (a port height +
+    /// interval).
+    ///
+    /// @param nodeId
+    /// @return unsigned int
+    ///
     unsigned int maxVerticalPortsExtent(const NodeId nodeId) const;
 
     unsigned int maxPortsTextAdvance(
@@ -65,9 +70,9 @@ private:
     ) const;
 
 private:
-    // Some variables are mutable because we need to change drawing
-    // metrics corresponding to fontMetrics but this doesn't change
-    // constness of the Node.
+    // Some variables are mutable because we need to change drawing metrics
+    // corresponding to fontMetrics but this doesn't change constness of the
+    // Node.
 
     mutable unsigned int _portSize;
     unsigned int         _portSpasing;

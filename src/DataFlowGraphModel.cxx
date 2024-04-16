@@ -27,6 +27,7 @@ DataFlowGraphModel::DataFlowGraphModel(
 std::unordered_set<NodeId> DataFlowGraphModel::allNodeIds() const
 {
     std::unordered_set<NodeId> nodeIds;
+
     for_each(
         _models.begin(),
         _models.end(),
@@ -250,22 +251,16 @@ QVariant DataFlowGraphModel::nodeData(NodeId nodeId, NodeRole role) const
     switch (role)
     {
     case NodeRole::Type: result = model->name(); break;
-
     case NodeRole::Position: result = _nodeGeometryData[nodeId].pos; break;
-
     case NodeRole::Size: result = _nodeGeometryData[nodeId].size; break;
-
     case NodeRole::CaptionVisible: result = model->captionVisible(); break;
-
     case NodeRole::Caption: result = model->caption(); break;
-
     case NodeRole::Style:
     {
         auto style = StyleCollection::nodeStyle();
         result     = style.toJson().toVariantMap();
     }
     break;
-
     case NodeRole::InternalData:
     {
         QJsonObject nodeJson;
@@ -275,11 +270,8 @@ QVariant DataFlowGraphModel::nodeData(NodeId nodeId, NodeRole role) const
         result = nodeJson.toVariantMap();
         break;
     }
-
     case NodeRole::InPortCount: result = model->nPorts(PortType::In); break;
-
     case NodeRole::OutPortCount: result = model->nPorts(PortType::Out); break;
-
     case NodeRole::Widget:
     {
         auto w = model->embeddedWidget();

@@ -17,6 +17,9 @@
 
 namespace QtNodes {
 
+///
+/// @brief Singleton
+///
 class NODE_EDITOR_PUBLIC StyleCollection
 {
 public:

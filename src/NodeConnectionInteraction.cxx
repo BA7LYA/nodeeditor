@@ -35,53 +35,42 @@ NodeConnectionInteraction::NodeConnectionInteraction(
 bool NodeConnectionInteraction::canConnect(PortIndex* portIndex) const
 {
     // 1. Connection requires a port.
-
     PortType requiredPort = _cgo.connectionState().requiredPort();
-
     if (requiredPort == PortType::None)
     {
         return false;
     }
-
     NodeId connectedNodeId
         = getNodeId(oppositePort(requiredPort), _cgo.connectionId());
 
     // 2. Forbid connecting the node to itself.
-
     if (_ngo.nodeId() == connectedNodeId)
     {
         return false;
     }
 
     // 3. Connection loose end is above the node port.
-
     QPointF connectionPoint
         = _cgo.sceneTransform().map(_cgo.endPoint(requiredPort));
-
     *portIndex = nodePortIndexUnderScenePoint(requiredPort, connectionPoint);
-
     if (*portIndex == InvalidPortIndex)
     {
         return false;
     }
 
     // 4. Model allows connection.
-
-    AbstractGraphModel& model = _ngo.nodeScene()->graphModel();
-
-    ConnectionId connectionId = makeCompleteConnectionId(
+    AbstractGraphModel& model        = _ngo.nodeScene()->graphModel();
+    ConnectionId        connectionId = makeCompleteConnectionId(
         _cgo.connectionId(),  // incomplete
         _ngo.nodeId(),        // missing node id
         *portIndex
     );                        // missing port index
-
     return model.connectionPossible(connectionId);
 }
 
 bool NodeConnectionInteraction::tryConnect() const
 {
     // 1. Check conditions from 'canConnect'.
-
     PortIndex targetPortIndex = InvalidPortIndex;
     if (!canConnect(&targetPortIndex))
     {
@@ -89,17 +78,14 @@ bool NodeConnectionInteraction::tryConnect() const
     }
 
     // 2. Create new connection.
-
     ConnectionId incompleteConnectionId = _cgo.connectionId();
-
-    ConnectionId newConnectionId = makeCompleteConnectionId(
+    ConnectionId newConnectionId        = makeCompleteConnectionId(
         incompleteConnectionId,
         _ngo.nodeId(),
         targetPortIndex
     );
 
     _ngo.nodeScene()->resetDraftConnection();
-
     _ngo.nodeScene()->undoStack().push(
         new ConnectCommand(_ngo.nodeScene(), newConnectionId)
     );
@@ -149,7 +135,6 @@ bool NodeConnectionInteraction::disconnect(PortType portToDisconnect) const
 PortType NodeConnectionInteraction::connectionRequiredPort() const
 {
     const auto& state = _cgo.connectionState();
-
     return state.requiredPort();
 }
 

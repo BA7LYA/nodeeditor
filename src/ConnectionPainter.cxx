@@ -287,7 +287,6 @@ void ConnectionPainter::paint(
     drawHoveredOrSelected(painter, cgo);
 
     drawSketchLine(painter, cgo);
-
     drawNormalLine(painter, cgo);
 
 #ifdef NODE_DEBUG_DRAWING
@@ -301,6 +300,7 @@ void ConnectionPainter::paint(
 
     painter->setPen(connectionStyle.constructionColor());
     painter->setBrush(connectionStyle.constructionColor());
+
     const double pointRadius = pointDiameter / 2.0;
     painter->drawEllipse(cgo.out(), pointRadius, pointRadius);
     painter->drawEllipse(cgo.in(), pointRadius, pointRadius);

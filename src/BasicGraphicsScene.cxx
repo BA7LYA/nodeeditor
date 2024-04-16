@@ -176,7 +176,8 @@ void BasicGraphicsScene::clearScene()
 NodeGraphicsObject* BasicGraphicsScene::nodeGraphicsObject(NodeId nodeId)
 {
     NodeGraphicsObject* ngo = nullptr;
-    auto                it  = _nodeGraphicsObjects.find(nodeId);
+
+    auto it = _nodeGraphicsObjects.find(nodeId);
     if (it != _nodeGraphicsObjects.end())
     {
         ngo = it->second.get();
@@ -190,6 +191,7 @@ ConnectionGraphicsObject* BasicGraphicsScene::connectionGraphicsObject(
 )
 {
     ConnectionGraphicsObject* cgo = nullptr;
+
     auto it = _connectionGraphicsObjects.find(connectionId);
     if (it != _connectionGraphicsObjects.end())
     {
@@ -211,7 +213,6 @@ void BasicGraphicsScene::setOrientation(const Qt::Orientation orientation)
             _nodeGeometry
                 = std::make_unique<DefaultHorizontalNodeGeometry>(_graphModel);
             break;
-
         case Qt::Vertical:
             _nodeGeometry
                 = std::make_unique<DefaultVerticalNodeGeometry>(_graphModel);

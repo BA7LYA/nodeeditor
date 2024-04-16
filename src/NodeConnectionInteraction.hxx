@@ -70,11 +70,9 @@ private:
         const;
 
 private:
-    NodeGraphicsObject& _ngo;
-
+    NodeGraphicsObject&       _ngo;
     ConnectionGraphicsObject& _cgo;
-
-    BasicGraphicsScene& _scene;
+    BasicGraphicsScene&       _scene;
 };
 
 }  // namespace QtNodes

@@ -154,7 +154,6 @@ QJsonObject ConnectionStyle::toJson() const
 
     QJsonObject root;
     root["ConnectionStyle"] = obj;
-
     return root;
 }
 

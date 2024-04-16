@@ -42,10 +42,8 @@ void DefaultNodePainter::drawNodeRect(
     NodeGraphicsObject& ngo
 ) const
 {
-    AbstractGraphModel& model = ngo.graphModel();
-
-    const NodeId nodeId = ngo.nodeId();
-
+    AbstractGraphModel&   model    = ngo.graphModel();
+    const NodeId          nodeId   = ngo.nodeId();
     AbstractNodeGeometry& geometry = ngo.nodeScene()->nodeGeometry();
 
     QSize size = geometry.size(nodeId);
@@ -362,7 +360,6 @@ void DefaultNodePainter::drawResizeRect(
     if (model.nodeFlags(nodeId) & NodeFlag::Resizable)
     {
         painter->setBrush(Qt::gray);
-
         painter->drawEllipse(geometry.resizeHandleRect(nodeId));
     }
 }

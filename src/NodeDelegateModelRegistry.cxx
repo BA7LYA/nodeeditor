@@ -21,7 +21,6 @@ std::unique_ptr<NodeDelegateModel> NodeDelegateModelRegistry::create(
 )
 {
     auto it = _registeredItemCreators.find(modelName);
-
     if (it != _registeredItemCreators.end())
     {
         return it->second();

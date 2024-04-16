@@ -104,7 +104,6 @@ void NodeGraphicsObject::embedQWidget()
         _proxyWidget = new QGraphicsProxyWidget(this);
 
         _proxyWidget->setWidget(w);
-
         _proxyWidget->setPreferredWidth(5);
 
         geometry.recomputeSize(_nodeId);

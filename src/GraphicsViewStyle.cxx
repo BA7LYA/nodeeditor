@@ -42,7 +42,6 @@ GraphicsViewStyle::GraphicsViewStyle(QString jsonText)
 void GraphicsViewStyle::setStyle(QString jsonText)
 {
     GraphicsViewStyle style(jsonText);
-
     StyleCollection::setGraphicsViewStyle(style);
 }
 

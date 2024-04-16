@@ -47,6 +47,5 @@ void StyleCollection::setGraphicsViewStyle(GraphicsViewStyle flowViewStyle)
 StyleCollection& StyleCollection::instance()
 {
     static StyleCollection collection;
-
     return collection;
 }

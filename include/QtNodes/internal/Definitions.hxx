@@ -26,21 +26,21 @@ NODE_EDITOR_PUBLIC Q_NAMESPACE
 Q_NAMESPACE_EXPORT(NODE_EDITOR_PUBLIC)
 #endif
 
-    ///
-    /// @brief Constants used for fetching QVariant data from GraphModel.
-    ///
-    enum class NodeRole {
-        Type           = 0,   ///< Type of the current node, usually a string.
-        Position       = 1,   ///< `QPointF` positon of the node on the scene.
-        Size           = 2,   ///< `QSize` for resizable nodes.
-        CaptionVisible = 3,   ///< `bool` for caption visibility.
-        Caption        = 4,   ///< `QString` for node caption.
-        Style          = 5,   ///< Custom NodeStyle as QJsonDocument
-        InternalData   = 6,   ///< Node-stecific user data as QJsonObject
-        InPortCount    = 7,   ///< `unsigned int`
-        OutPortCount   = 9,   ///< `unsigned int`
-        Widget         = 10,  ///< Optional `QWidget*` or `nullptr`
-    };
+///
+/// @brief Constants used for fetching QVariant data from GraphModel.
+///
+enum class NodeRole {
+    Type           = 0,   ///< Type of the current node, usually a string.
+    Position       = 1,   ///< `QPointF` positon of the node on the scene.
+    Size           = 2,   ///< `QSize` for resizable nodes.
+    CaptionVisible = 3,   ///< `bool` for caption visibility.
+    Caption        = 4,   ///< `QString` for node caption.
+    Style          = 5,   ///< Custom NodeStyle as QJsonDocument
+    InternalData   = 6,   ///< Node-stecific user data as QJsonObject
+    InPortCount    = 7,   ///< `unsigned int`
+    OutPortCount   = 9,   ///< `unsigned int`
+    Widget         = 10,  ///< Optional `QWidget*` or `nullptr`
+};
 Q_ENUM_NS(NodeRole)
 
 ///
@@ -57,9 +57,9 @@ Q_DECLARE_FLAGS(NodeFlags, NodeFlag)
 Q_FLAG_NS(NodeFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(NodeFlags)
 
-/**
- * Constants for fetching port-related information from the GraphModel.
- */
+///
+/// @brief Constants for fetching port-related information from the GraphModel.
+///
 enum class PortRole
 {
     Data                 = 0,  ///< `std::shared_ptr<NodeData>`.
@@ -70,10 +70,10 @@ enum class PortRole
 };
 Q_ENUM_NS(PortRole)
 
-/**
- * Defines how many connections are possible to attach to ports. The
- * values are fetched using PortRole::ConnectionPolicy.
- */
+///
+/// @brief Defines how many connections are possible to attach to ports. The
+/// values are fetched using PortRole::ConnectionPolicy.
+///
 enum class ConnectionPolicy
 {
     One,   ///< Just one connection for each port.
@@ -81,9 +81,9 @@ enum class ConnectionPolicy
 };
 Q_ENUM_NS(ConnectionPolicy)
 
-/**
- * Used for distinguishing input and output node ports.
- */
+///
+/// @brief Used for distinguishing input and output node ports.
+///
 enum class PortType
 {
     In   = 0,  ///< Input node port (from the left).
@@ -114,7 +114,7 @@ static constexpr NodeId InvalidNodeId = std::numeric_limits<NodeId>::max();
 
 ///
 /// @brief A unique connection identificator that stores out `NodeId`, out
-/// `PortIndex`, in `NodeId`, in `PortIndex`
+/// `PortIndex`, in `NodeId`, in `PortIndex`.
 ///
 struct ConnectionId
 {

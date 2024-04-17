@@ -40,8 +40,6 @@ if(BUILD_DEBUG_POSTFIX_D)
   set(CMAKE_MINSIZEREL_POSTFIX "s")
 endif()
 
-add_subdirectory(external)
-
 if(USE_QT6)
   find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 else()

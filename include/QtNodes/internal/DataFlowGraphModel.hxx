@@ -128,16 +128,16 @@ private:
     void sendConnectionDeletion(const ConnectionId connectionId);
 
 private Q_SLOTS:
-    /**
-     * Fuction is called in three cases:
-     *
-     * - By underlying NodeDelegateModel when a node has new data to propagate.
-     *   @see DataFlowGraphModel::addNode
-     * - When a new connection is created.
-     *   @see DataFlowGraphModel::addConnection
-     * - When a node restored from JSON an needs to send data downstream.
-     *   @see DataFlowGraphModel::loadNode
-     */
+    ///
+    /// Fuction is called in three cases:
+    ///
+    /// - By underlying NodeDelegateModel when a node has new data to propagate.
+    ///   @see DataFlowGraphModel::addNode
+    /// - When a new connection is created.
+    ///   @see DataFlowGraphModel::addConnection
+    /// - When a node restored from JSON an needs to send data downstream.
+    ///   @see DataFlowGraphModel::loadNode
+    ///
     void onOutPortDataUpdated(const NodeId nodeId, const PortIndex portIndex);
 
     ///

@@ -29,13 +29,14 @@ class NODE_EDITOR_PUBLIC AbstractNodePainter
 public:
     virtual ~AbstractNodePainter() = default;
 
-    /**
-     * Reimplement this function in order to have a custom painting.
-     *
-     * Useful functions:
-     * `NodeGraphicsObject::nodeScene()->nodeGeometry()`
-     * `NodeGraphicsObject::graphModel()`
-     */
+    ///
+    /// @brief Reimplement this function in order to have a custom painting.
+    /// Useful functions:
+    /// `NodeGraphicsObject::nodeScene()->nodeGeometry()`
+    /// `NodeGraphicsObject::graphModel()`
+    /// @param painter
+    /// @param ngo
+    ///
     virtual void paint(QPainter* painter, NodeGraphicsObject& ngo) const = 0;
 };
 

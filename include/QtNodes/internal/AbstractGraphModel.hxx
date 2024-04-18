@@ -37,33 +37,43 @@ class NODE_EDITOR_PUBLIC AbstractGraphModel : public QObject
     Q_OBJECT
 
 public:
-    /// Generates a new unique NodeId.
+    ///
     /// TODO(ba7lya): Add a class to generate new unique NodeId.
+    ///
+
+    ///
+    /// @brief Generates a new unique NodeId.
+    /// @return
+    ///
     virtual NodeId newNodeId() = 0;
 
-    /// @brief Returns the full set of unique Node Ids.
-    /**
-     * Model creator is responsible for generating unique `unsigned int`
-     * Ids for all the nodes in the graph. From an Id it should be
-     * possible to trace back to the model's internal representation of
-     * the node.
-     */
+    ///
+    /// @brief Returns the full set of unique Node Ids. Model creator is
+    /// responsible for generating unique `unsigned int` Ids for all the nodes
+    /// in the graph. From an Id it should be possible to trace back to the
+    /// model's internal representation of the node.
+    ///
     virtual std::unordered_set<NodeId> allNodeIds() const = 0;
 
+    ///
     /// @brief A collection of all input and output connections for the given
     /// `nodeId`.
     /// @param nodeId
     /// @return std::unordered_set<ConnectionId>
+    ///
     virtual std::unordered_set<ConnectionId> allConnectionIds(
         const NodeId nodeId
     ) const
         = 0;
 
+    ///
     /// @brief Returns all connected Node Ids for given port.
-    /**
-     * The returned set of nodes and port indices correspond to the type
-     * opposite to the given `portType`.
-     */
+    /// @param nodeId
+    /// @param portType
+    /// @param index
+    /// @return The returned set of nodes and port indices correspond to the
+    /// type opposite to the given `portType`.
+    ///
     virtual std::unordered_set<ConnectionId> connections(
         NodeId    nodeId,
         PortType  portType,
@@ -90,13 +100,13 @@ public:
     ///
     virtual NodeId addNode(const QString nodeType = QString()) = 0;
 
-    /// Model decides if a conection with a given connection Id possible.
-    /**
-     * The default implementation compares corresponding data types.
-     *
-     * It is possible to override the function and connect non-equal
-     * data types.
-     */
+    ///
+    /// @brief Model decides if a conection with a given connection Id possible.
+    /// The default implementation compares corresponding data types. It is
+    /// possible to override the function and connect non-equal data types.
+    /// @param connectionId
+    /// @return
+    ///
     virtual bool connectionPossible(const ConnectionId connectionId) const = 0;
 
     ///
@@ -110,14 +120,13 @@ public:
         return true;
     }
 
-    /// Creates a new connection between two nodes.
-    /**
-     * Default implementation emits signal
-     * `connectionCreated(connectionId)`
-     *
-     * In the derived classes user must emite the signal to notify the
-     * scene about the changes.
-     */
+    ///
+    /// @brief Creates a new connection between two nodes. Default
+    /// implementation emits signal `connectionCreated(connectionId)`. In the
+    /// derived classes user must emite the signal to notify the scene about the
+    /// changes.
+    /// @param connectionId
+    ///
     virtual void addConnection(const ConnectionId connectionId) = 0;
 
     ///
@@ -162,18 +171,25 @@ public:
         return NodeFlag::NoFlags;
     }
 
-    /// @brief Sets node properties.
-    /**
-     * Sets: Node Caption, Node Caption Visibility, Shyle, State, Node Position
-     * etc.
-     * @see NodeRole.
-     */
+    ///
+    /// @brief Sets node properties. Sets: Node Caption, Node Caption
+    /// Visibility, Shyle, State, Node Position etc.
+    /// @see NodeRole.
+    /// @param nodeId
+    /// @param role
+    /// @param value
+    /// @return
+    ///
     virtual bool setNodeData(NodeId nodeId, NodeRole role, QVariant value) = 0;
 
+    ///
     /// @brief Returns port-related data for requested NodeRole.
-    /**
-     * @returns Port Data Type, Port Data, Connection Policy, Port Caption.
-     */
+    /// @param nodeId
+    /// @param portType
+    /// @param index
+    /// @param role
+    /// @return Port Data Type, Port Data, Connection Policy, Port Caption.
+    ///
     virtual QVariant portData(
         NodeId    nodeId,
         PortType  portType,

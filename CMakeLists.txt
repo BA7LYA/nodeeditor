@@ -182,6 +182,13 @@ set_target_properties(QtNodes
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
+# TODO(ba7lya)
+# add_custom_command(
+#     TARGET QtNodes
+#     POST_BUILD
+#     COMMAND ${CMAKE_BINARY_DIR}/vcpkg_installed/${VCPKG_DEFAULT_TRIPLET}/tools/Qt6/bin/
+# )
+
 ######
 # Moc
 ##

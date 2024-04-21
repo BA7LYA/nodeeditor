@@ -7,7 +7,8 @@
 /// @copyright Copyright (c) 2024
 ///
 
-#pragma once
+#ifndef STUB_NODE_DATA_MODEL_HXX_8498C27C0F42
+#define STUB_NODE_DATA_MODEL_HXX_8498C27C0F42
 
 #include <QtNodes/NodeDataModel>
 #include <utility>
@@ -65,3 +66,5 @@ private:
     QString _name    = "name";
     QString _caption = "caption";
 };
+
+#endif  // STUB_NODE_DATA_MODEL_HXX_8498C27C0F42

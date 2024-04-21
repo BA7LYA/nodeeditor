@@ -7,7 +7,8 @@
 /// @copyright Copyright (c) 2024
 ///
 
-#pragma once
+#ifndef STRINGIFY_HXX_DB831D78A844
+#define STRINGIFY_HXX_DB831D78A844
 
 #include <catch2/catch.hpp>
 #include <QtCore/QPoint>
@@ -35,3 +36,5 @@ struct StringMaker<QPoint>
 };
 
 }  // namespace Catch
+
+#endif  // STRINGIFY_HXX_DB831D78A844

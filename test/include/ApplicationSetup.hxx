@@ -7,7 +7,8 @@
 /// @copyright Copyright (c) 2024
 ///
 
-#pragma once
+#ifndef APPLICATION_SETUP_HXX_B82591118768
+#define APPLICATION_SETUP_HXX_B82591118768
 
 #include <memory>
 #include <QApplication>
@@ -24,3 +25,5 @@ inline std::unique_ptr<QApplication> applicationSetup()
 
     return app;
 }
+
+#endif  // APPLICATION_SETUP_HXX_B82591118768

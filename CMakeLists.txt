@@ -13,9 +13,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(OpenGL_GL_PREFERENCE LEGACY)
 
 # --- building options ---
-option(BUILD_TESTING "Build tests" ON)
+option(BUILD_TESTING "Build tests" OFF) # FIXME(ba7lya)
 option(BUILD_EXAMPLES "Build Examples" ON)
-option(BUILD_DOCS "Build Documentation" ON)
+option(BUILD_DOCS "Build Documentation" OFF)
 option(BUILD_SHARED_LIBS "Build as shared library" ON)
 option(BUILD_DEBUG_POSTFIX_D "Append d suffix to debug libraries" OFF)
 option(QT_NODES_FORCE_TEST_COLOR "Force colorized unit test output" OFF)

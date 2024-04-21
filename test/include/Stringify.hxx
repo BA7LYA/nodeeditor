@@ -10,7 +10,7 @@
 #ifndef STRINGIFY_HXX_DB831D78A844
 #define STRINGIFY_HXX_DB831D78A844
 
-#include <catch2/catch.hpp>
+#include <catch.hpp>
 #include <QtCore/QPoint>
 #include <QtCore/QPointF>
 #include <QtTest>

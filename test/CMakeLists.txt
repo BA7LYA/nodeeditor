@@ -6,6 +6,8 @@ else()
     set(Qt Qt5)
 endif()
 
+find_package(Catch2 CONFIG REQUIRED)
+
 add_executable(test_nodes
     # test_main.cxx
     src/TestDragging.cxx

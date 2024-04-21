@@ -7,7 +7,7 @@
 /// @copyright Copyright (c) 2024
 ///
 
-#include <catch2/catch.hpp>
+#include <catch.hpp>
 #include <QtNodes/FlowScene>
 #include <QtNodes/FlowView>
 #include <QtNodes/Node>

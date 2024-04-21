@@ -1,14 +1,18 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(QtNodesLibrary CXX)
+# -- project ---
+project(QtNodes LANGUAGES CXX)
 
+# --- cmake modules ---
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
+# --- cmake options ---
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 set(CMAKE_DISABLE_SOURCE_CHANGES  ON)
-set(OpenGL_GL_PREFERENCE LEGACY)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(OpenGL_GL_PREFERENCE LEGACY)
 
+# --- building options ---
 option(BUILD_TESTING "Build tests" ON)
 option(BUILD_EXAMPLES "Build Examples" ON)
 option(BUILD_DOCS "Build Documentation" ON)
@@ -25,12 +29,15 @@ if(QT_NODES_DEVELOPER_DEFAULTS)
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 endif()
 
+# --- build type postfix ---
 if(BUILD_DEBUG_POSTFIX_D)
     set(CMAKE_DEBUG_POSTFIX "d")
     set(CMAKE_RELEASE_POSTFIX "")
     set(CMAKE_RELWITHDEBINFO_POSTFIX "rd")
     set(CMAKE_MINSIZEREL_POSTFIX "s")
 endif()
+
+# --- Qt dependency ---
 
 if(USE_QT6)
     find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
@@ -55,6 +62,7 @@ endif()
 # We'll have to manually specify some files
 set(CMAKE_AUTOMOC ON)
 
+# --- source files ---
 set(CPP_SOURCE_FILES
     src/AbstractGraphModel.cxx
     src/AbstractNodeGeometry.cxx
@@ -82,6 +90,7 @@ set(CPP_SOURCE_FILES
     src/locateNode.cxx
 )
 
+# --- header files ---
 set(HPP_HEADER_FILES
     include/QtNodes/internal/AbstractGraphModel.hxx
     include/QtNodes/internal/AbstractNodeGeometry.hxx
@@ -120,16 +129,15 @@ set(HPP_HEADER_FILES
     src/UndoCommands.hxx
 )
 
-# If we want to give the option to build a static library,
-# set BUILD_SHARED_LIBS option to OFF
+# --- build target ---
 add_library(QtNodes
     ${CPP_SOURCE_FILES}
     ${HPP_HEADER_FILES}
     ${RESOURCES}
 )
-
 add_library(QtNodes::QtNodes ALIAS QtNodes)
 
+# --- include directories ---
 target_include_directories(QtNodes
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -139,6 +147,7 @@ target_include_directories(QtNodes
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/QtNodes/internal>
 )
 
+# --- linking libraries ---
 target_link_libraries(QtNodes
     PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
@@ -147,6 +156,7 @@ target_link_libraries(QtNodes
         Qt${QT_VERSION_MAJOR}::OpenGL
 )
 
+# --- compiler flags ---
 target_compile_definitions(QtNodes
     PUBLIC
         NODE_EDITOR_SHARED
@@ -156,6 +166,7 @@ target_compile_definitions(QtNodes
         QT_NO_KEYWORDS
 )
 
+# --- compiler options ---
 target_compile_options(QtNodes
     PRIVATE
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /wd4127 /EHsc /utf-8>
@@ -175,6 +186,7 @@ if(QT_NODES_DEVELOPER_DEFAULTS)
     set_target_properties(QtNodes PROPERTIES CXX_EXTENSIONS OFF)
 endif()
 
+# --- target properties ---
 set_target_properties(QtNodes
     PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
@@ -191,7 +203,7 @@ set_target_properties(QtNodes
 
 ######
 # Moc
-##
+######
 
 file(GLOB_RECURSE HEADERS_TO_MOC include/QtNodes/internal/*.hxx)
 
@@ -211,29 +223,24 @@ endif()
 
 target_sources(QtNodes PRIVATE ${nodes_moc})
 
-###########
-# Examples
-##
-
+# --- demos ---
 if(BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
+# --- docs ---
 if(BUILD_DOCS)
     add_subdirectory(docs)
 endif()
 
-##################
-# Automated Tests
-##
-
+# --- unit tests ---
 if(BUILD_TESTING)
-    #add_subdirectory(test)
+    add_subdirectory(test)
 endif()
 
 ###############
 # Installation
-##
+###############
 
 include(GNUInstallDirs)
 
@@ -248,8 +255,7 @@ install(TARGETS QtNodes
 )
 
 install(DIRECTORY include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(EXPORT QtNodesTargets
     FILE QtNodesTargets.cmake
@@ -265,7 +271,5 @@ configure_package_config_file(
     INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
 )
 
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/QtNodesConfig.cmake
-    DESTINATION ${INSTALL_CONFIGDIR}
-)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/QtNodesConfig.cmake
+    DESTINATION ${INSTALL_CONFIGDIR})

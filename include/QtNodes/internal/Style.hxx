@@ -1,5 +1,5 @@
 ///
-/// @file Style.hpp
+/// @file Style.hxx
 /// @author BA7LYA (1042140025@qq.com)
 /// @brief
 /// @version 0.1
@@ -19,6 +19,9 @@
 
 namespace QtNodes {
 
+///
+/// @brief Style
+///
 class Style  // : public QObject
 {
     // Q_OBJECT

@@ -7,11 +7,11 @@ else()
 endif()
 
 add_executable(test_nodes
-  test_main.cpp
-  src/TestDragging.cpp
-  src/TestDataModelRegistry.cpp
-  src/TestFlowScene.cpp
-  src/TestNodeGraphicsObject.cpp
+  # test_main.cxx
+  src/TestDragging.cxx
+  src/TestDataModelRegistry.cxx
+  src/TestFlowScene.cxx
+  src/TestNodeGraphicsObject.cxx
   include/ApplicationSetup.hpp
   include/Stringify.hpp
   include/StubNodeDataModel.hpp
@@ -28,6 +28,7 @@ target_link_libraries(test_nodes
   PRIVATE
     QtNodes::QtNodes
     Catch2::Catch2
+    Catch2::Catch2WithMain
     ${Qt}::Test
 )
 

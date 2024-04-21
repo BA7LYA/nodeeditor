@@ -18,6 +18,12 @@
 
 namespace QtNodes {
 
+///
+/// @brief
+/// @param portType
+/// @param connectionId
+/// @return PortIndex
+///
 inline PortIndex getNodeId(PortType portType, ConnectionId connectionId)
 {
     NodeId id = InvalidNodeId;
@@ -34,6 +40,12 @@ inline PortIndex getNodeId(PortType portType, ConnectionId connectionId)
     return id;
 }
 
+///
+/// @brief
+/// @param portType
+/// @param connectionId
+/// @return PortIndex
+///
 inline PortIndex getPortIndex(PortType portType, ConnectionId connectionId)
 {
     PortIndex index = InvalidPortIndex;
@@ -50,6 +62,11 @@ inline PortIndex getPortIndex(PortType portType, ConnectionId connectionId)
     return index;
 }
 
+///
+/// @brief
+/// @param port
+/// @return
+///
 inline PortType oppositePort(PortType port)
 {
     PortType result = PortType::None;
@@ -67,11 +84,21 @@ inline PortType oppositePort(PortType port)
     return result;
 }
 
+///
+/// @brief 
+/// @param index 
+/// @return 
+///
 inline bool isPortIndexValid(PortIndex index)
 {
     return index != InvalidPortIndex;
 }
 
+///
+/// @brief 
+/// @param portType 
+/// @return 
+///
 inline bool isPortTypeValid(PortType portType)
 {
     return portType != PortType::None;

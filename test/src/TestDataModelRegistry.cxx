@@ -1,8 +1,16 @@
-#include <QtNodes/DataModelRegistry>
+///
+/// @file TestDataModelRegistry.cxx
+/// @author BA7LYA (1042140025@qq.com)
+/// @brief
+/// @version 0.1
+/// @date 2024-04-22
+/// @copyright Copyright (c) 2024
+///
 
 #include <catch2/catch.hpp>
+#include <QtNodes/DataModelRegistry>
 
-#include "StubNodeDataModel.hpp"
+#include "StubNodeDataModel.hxx"
 
 using QtNodes::DataModelRegistry;
 using QtNodes::NodeData;
@@ -15,9 +23,12 @@ namespace {
 class StubModelStaticName : public StubNodeDataModel
 {
 public:
-    static QString Name() { return "Name"; }
+    static QString Name()
+    {
+        return "Name";
+    }
 };
-} // namespace
+}  // namespace
 
 TEST_CASE("DataModelRegistry::registerModel", "[interface]")
 {
@@ -41,23 +52,27 @@ TEST_CASE("DataModelRegistry::registerModel", "[interface]")
     {
         SECTION("non-static name()")
         {
-            registry.registerModel([] { return std::make_unique<StubNodeDataModel>(); });
+            registry.registerModel(
+                [] { return std::make_unique<StubNodeDataModel>(); }
+            );
 
             auto model = registry.create("name");
 
             REQUIRE(model != nullptr);
             CHECK(model->name() == "name");
-            CHECK(dynamic_cast<StubNodeDataModel *>(model.get()));
+            CHECK(dynamic_cast<StubNodeDataModel*>(model.get()));
         }
         SECTION("static Name()")
         {
-            registry.registerModel([] { return std::make_unique<StubModelStaticName>(); });
+            registry.registerModel(
+                [] { return std::make_unique<StubModelStaticName>(); }
+            );
 
             auto model = registry.create("Name");
 
             REQUIRE(model != nullptr);
             CHECK(model->name() == "name");
-            CHECK(dynamic_cast<StubModelStaticName *>(model.get()));
+            CHECK(dynamic_cast<StubModelStaticName*>(model.get()));
         }
     }
 }

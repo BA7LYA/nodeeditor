@@ -19,6 +19,9 @@ namespace QtNodes {
 class AbstractGraphModel;
 class BasicGraphicsScene;
 
+///
+/// @brief DefaultVerticalNodeGeometry
+///
 class NODE_EDITOR_PUBLIC DefaultVerticalNodeGeometry
     : public AbstractNodeGeometry
 {

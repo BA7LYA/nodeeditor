@@ -92,6 +92,9 @@ enum class PortType
 };
 Q_ENUM_NS(PortType)
 
+///
+/// @brief PortCount
+///
 using PortCount = unsigned int;
 
 ///
@@ -124,17 +127,34 @@ struct ConnectionId
     PortIndex inPortIndex;
 };
 
+///
+/// @brief 
+/// @param a 
+/// @param b 
+/// @return 
+///
 inline bool operator==(const ConnectionId& a, const ConnectionId& b)
 {
     return a.outNodeId == b.outNodeId && a.outPortIndex == b.outPortIndex
         && a.inNodeId == b.inNodeId && a.inPortIndex == b.inPortIndex;
 }
 
+///
+/// @brief 
+/// @param a 
+/// @param b 
+/// @return 
+///
 inline bool operator!=(const ConnectionId& a, const ConnectionId& b)
 {
     return !(a == b);
 }
 
+/// 
+/// @brief 
+/// 
+/// @param id 
+/// 
 inline void invertConnection(ConnectionId& id)
 {
     std::swap(id.outNodeId, id.inNodeId);

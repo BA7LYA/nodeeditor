@@ -19,6 +19,9 @@
 
 using QtNodes::ConnectionStyle;
 
+///
+/// @brief 
+///
 inline void initResources()
 {
     Q_INIT_RESOURCE(resources);

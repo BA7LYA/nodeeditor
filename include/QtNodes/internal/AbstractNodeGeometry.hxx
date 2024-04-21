@@ -21,6 +21,9 @@ namespace QtNodes {
 
 class AbstractGraphModel;
 
+///
+/// @brief AbstractNodeGeometry
+///
 class NODE_EDITOR_PUBLIC AbstractNodeGeometry
 {
 public:

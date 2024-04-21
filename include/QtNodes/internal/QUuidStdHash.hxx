@@ -1,5 +1,5 @@
 ///
-/// @file QUuidStdHash.hpp
+/// @file QUuidStdHash.hxx
 /// @author BA7LYA (1042140025@qq.com)
 /// @brief
 /// @version 0.1
@@ -16,6 +16,9 @@
 
 namespace std {
 
+///
+/// @brief std::hash<QUuid>
+///
 template<>
 struct hash<QUuid>
 {

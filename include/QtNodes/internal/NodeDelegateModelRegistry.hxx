@@ -184,9 +184,9 @@ private:
     ///
     /// @brief
     /// @tparam ModelType
-    /// @param
-    /// @param
-    /// @return
+    /// @param std::true_type
+    /// @param const RegistryItemCreator&
+    /// @return QString
     ///
     template<typename ModelType>
     static QString computeName(std::true_type, const RegistryItemCreator&)

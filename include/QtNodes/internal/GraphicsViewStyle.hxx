@@ -17,6 +17,9 @@
 
 namespace QtNodes {
 
+///
+/// @brief GraphicsViewStyle
+///
 class NODE_EDITOR_PUBLIC GraphicsViewStyle : public Style
 {
 public:

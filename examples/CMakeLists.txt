@@ -1,3 +1,4 @@
+# --- demos ---
 add_subdirectory(calculator)
 add_subdirectory(connection_colors)
 add_subdirectory(dynamic_ports)

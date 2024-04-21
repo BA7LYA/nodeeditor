@@ -1,5 +1,5 @@
 ///
-/// @file ConnectionIdHash.hpp
+/// @file ConnectionIdHash.hxx
 /// @author BA7LYA (1042140025@qq.com)
 /// @brief
 /// @version 0.1
@@ -64,7 +64,7 @@ struct hash<QtNodes::ConnectionId>
 };
 
 ///
-/// @brief
+/// @brief std::hash<std::pair<QtNodes::NodeId, QtNodes::PortIndex>>
 ///
 template<>
 struct hash<std::pair<QtNodes::NodeId, QtNodes::PortIndex>>
@@ -80,7 +80,7 @@ struct hash<std::pair<QtNodes::NodeId, QtNodes::PortIndex>>
 };
 
 ///
-/// @brief
+/// @brief std::hash<std::tuple<QtNodes::NodeId, QtNodes::PortType, QtNodes::PortIndex>>
 ///
 template<>
 struct hash<std::tuple<QtNodes::NodeId, QtNodes::PortType, QtNodes::PortIndex>>

@@ -17,6 +17,9 @@
 
 namespace QtNodes {
 
+///
+/// @brief ConnectionStyle
+///
 class NODE_EDITOR_PUBLIC ConnectionStyle : public Style
 {
 public:

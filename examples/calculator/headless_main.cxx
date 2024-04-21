@@ -26,7 +26,9 @@ static std::shared_ptr<NodeDelegateModelRegistry> registerDataModels()
     auto ret = std::make_shared<NodeDelegateModelRegistry>();
 
     ret->registerModel<NumberSourceDataModel>("Sources");
+
     ret->registerModel<NumberDisplayDataModel>("Displays");
+
     ret->registerModel<AdditionModel>("Operators");
     ret->registerModel<SubtractionModel>("Operators");
     ret->registerModel<MultiplicationModel>("Operators");
@@ -117,6 +119,7 @@ int main(int argc, char* argv[])
     // Alternatively you can create the graph by yourself with the functions
     // `DataFlowGraphModel::addNode` and `DataFlowGraphModel::addConnection` and
     // use the obtained `NodeId` to fetch the `NodeDelegateModel`s
+    // TODO(ba7lya): import json schema with iostream
     QJsonDocument sceneJson
         = QJsonDocument::fromJson(addingNumbersScene.toUtf8());
 

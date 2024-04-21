@@ -14,6 +14,9 @@
 
 namespace QtNodes {
 
+///
+/// @brief Serializable
+///
 class Serializable
 {
 public:

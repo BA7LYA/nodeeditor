@@ -22,6 +22,9 @@ namespace QtNodes {
 class BasicGraphicsScene;
 class AbstractGraphModel;
 
+///
+/// @brief NodeGraphicsObject
+///
 class NodeGraphicsObject : public QGraphicsObject
 {
     Q_OBJECT

@@ -20,6 +20,9 @@ namespace QtNodes {
 class ConnectionGeometry;
 class ConnectionGraphicsObject;
 
+///
+/// @brief ConnectionPainter
+///
 class ConnectionPainter
 {
 public:

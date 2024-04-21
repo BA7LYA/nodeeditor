@@ -26,6 +26,9 @@ class NODE_EDITOR_PUBLIC GraphicsView : public QGraphicsView
     Q_OBJECT
 
 public:
+    ///
+    /// @brief ScaleRange
+    ///
     struct ScaleRange
     {
         double minimum = 0;

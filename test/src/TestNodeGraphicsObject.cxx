@@ -1,14 +1,21 @@
-#include "ApplicationSetup.hpp"
-#include "StubNodeDataModel.hpp"
+///
+/// @file TestNodeGraphicsObject.cxx
+/// @author BA7LYA (1042140025@qq.com)
+/// @brief
+/// @version 0.1
+/// @date 2024-04-22
+/// @copyright Copyright (c) 2024
+///
 
+#include <catch2/catch.hpp>
 #include <QtNodes/FlowScene>
 #include <QtNodes/FlowView>
 #include <QtNodes/Node>
 #include <QtNodes/NodeDataModel>
-
-#include <catch2/catch.hpp>
-
 #include <QtTest>
+
+#include "ApplicationSetup.hxx"
+#include "StubNodeDataModel.hxx"
 
 using QtNodes::FlowScene;
 using QtNodes::FlowView;
@@ -17,16 +24,22 @@ using QtNodes::NodeDataModel;
 using QtNodes::NodeGraphicsObject;
 using QtNodes::PortType;
 
-TEST_CASE("NodeDataModel::portOutConnectionPolicy(...) isn't called for input "
-          "connections (issue #127)",
-          "[gui]")
+TEST_CASE(
+    "NodeDataModel::portOutConnectionPolicy(...) isn't called for input "
+    "connections (issue #127)",
+    "[gui]"
+)
 {
     class MockModel : public StubNodeDataModel
     {
     public:
-        unsigned int nPorts(PortType) const override { return 1; }
+        unsigned int nPorts(PortType) const override
+        {
+            return 1;
+        }
 
-        NodeDataModel::ConnectionPolicy portOutConnectionPolicy(int index) const override
+        NodeDataModel::ConnectionPolicy portOutConnectionPolicy(int index
+        ) const override
         {
             portOutConnectionPolicyCalledCount++;
             return NodeDataModel::ConnectionPolicy::One;
@@ -38,7 +51,7 @@ TEST_CASE("NodeDataModel::portOutConnectionPolicy(...) isn't called for input "
     auto setup = applicationSetup();
 
     FlowScene scene;
-    FlowView view(&scene);
+    FlowView  view(&scene);
 
     // Ensure we have enough size to contain the node
     view.resize(640, 480);
@@ -46,20 +59,26 @@ TEST_CASE("NodeDataModel::portOutConnectionPolicy(...) isn't called for input "
     view.show();
     REQUIRE(QTest::qWaitForWindowExposed(&view));
 
-    auto &node = scene.createNode(std::make_unique<MockModel>());
-    auto &model = dynamic_cast<MockModel &>(*node.nodeDataModel());
-    auto &ngo = node.nodeGraphicsObject();
-    auto &ngeom = node.nodeGeometry();
+    auto& node  = scene.createNode(std::make_unique<MockModel>());
+    auto& model = dynamic_cast<MockModel&>(*node.nodeDataModel());
+    auto& ngo   = node.nodeGraphicsObject();
+    auto& ngeom = node.nodeGeometry();
 
     // Move the node to somewhere in the middle of the screen
     ngo.setPos(QPointF(50, 50));
 
     // Compute the on-screen position of the input port
-    QPointF scInPortPos = ngeom.portScenePosition(0, PortType::In, ngo.sceneTransform());
+    QPointF scInPortPos
+        = ngeom.portScenePosition(0, PortType::In, ngo.sceneTransform());
     QPoint vwInPortPos = view.mapFromScene(scInPortPos);
 
     // Create a partial connection by clicking on the input port of the node
-    QTest::mousePress(view.windowHandle(), Qt::LeftButton, Qt::NoModifier, vwInPortPos);
+    QTest::mousePress(
+        view.windowHandle(),
+        Qt::LeftButton,
+        Qt::NoModifier,
+        vwInPortPos
+    );
 
     CHECK(model.portOutConnectionPolicyCalledCount == 0);
 }

@@ -22,7 +22,7 @@ namespace QtNodes {
 class BasicGraphicsScene;
 
 ///
-/// @brief
+/// @brief CreateCommand
 ///
 class CreateCommand : public QUndoCommand
 {
@@ -60,7 +60,7 @@ private:
 };
 
 ///
-/// @brief
+/// @brief CopyCommand
 ///
 class CopyCommand : public QUndoCommand
 {
@@ -69,7 +69,7 @@ public:
 };
 
 ///
-/// @brief
+/// @brief PasteCommand
 ///
 class PasteCommand : public QUndoCommand
 {
@@ -90,7 +90,7 @@ private:
 };
 
 ///
-/// @brief
+/// @brief DisconnectCommand
 ///
 class DisconnectCommand : public QUndoCommand
 {
@@ -107,7 +107,7 @@ private:
 };
 
 ///
-/// @brief
+/// @brief ConnectCommand
 ///
 class ConnectCommand : public QUndoCommand
 {
@@ -124,7 +124,7 @@ private:
 };
 
 ///
-/// @brief
+/// @brief MoveNodeCommand
 ///
 class MoveNodeCommand : public QUndoCommand
 {

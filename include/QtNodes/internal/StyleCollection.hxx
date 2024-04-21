@@ -1,5 +1,5 @@
 ///
-/// @file StyleCollection.hpp
+/// @file StyleCollection.hxx
 /// @author BA7LYA (1042140025@qq.com)
 /// @brief
 /// @version 0.1

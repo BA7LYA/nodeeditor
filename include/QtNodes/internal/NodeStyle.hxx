@@ -17,6 +17,9 @@
 
 namespace QtNodes {
 
+///
+/// @brief NodeStyle
+///
 class NODE_EDITOR_PUBLIC NodeStyle : public Style
 {
 public:
